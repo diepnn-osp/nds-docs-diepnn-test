@@ -1,0 +1,42 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+
+actor "Lãnh đạo Sở Tư pháp, Lãnh đạo Phòng HCBTTP tại Sở Tư pháp, Chuyên viên STP" as LeaderSTP
+actor "Lãnh đạo Bộ Tư pháp, Lãnh đạo Cục BTTP, Chuyên viên Cục BTTP" as LeaderBTP
+actor "Công chứng viên tại TCHNCC, Nhân viên tại TCHNCC" as TCHHNCC
+
+
+'==================== Quản lý thông báo ====================
+package "Quản lý thông báo" as P_Notification {
+    usecase "Xem danh sách thông báo" as UC_Noti_List
+    usecase "Xem chi tiết thông báo" as UC_Noti_Detail
+    usecase "Tìm kiếm thông báo" as UC_Noti_Search
+    usecase "Sửa thông báo" as UC_Noti_Update
+    usecase "Xóa thông báo" as UC_Noti_Delete
+}
+
+'==================== Liên kết Actor → UC ====================
+' Lãnh đạo Sở Tư pháp / Phòng HCBTTP / Chuyên viên STP
+LeaderSTP -- UC_Noti_List
+LeaderSTP -- UC_Noti_Detail
+LeaderSTP -- UC_Noti_Search
+LeaderSTP -- UC_Noti_Update
+LeaderSTP -- UC_Noti_Delete
+
+' Lãnh đạo Bộ Tư pháp / Cục BTTP / Chuyên viên Cục BTTP
+LeaderBTP -- UC_Noti_List
+LeaderBTP -- UC_Noti_Detail
+LeaderBTP -- UC_Noti_Search
+LeaderBTP -- UC_Noti_Update
+LeaderBTP -- UC_Noti_Delete
+
+' Công chứng viên tại TCHNCC / Nhân viên tại TCHNCC
+TCHHNCC -- UC_Noti_List
+TCHHNCC -- UC_Noti_Detail
+TCHHNCC -- UC_Noti_Search
+TCHHNCC -- UC_Noti_Update
+TCHHNCC -- UC_Noti_Delete
+@enduml

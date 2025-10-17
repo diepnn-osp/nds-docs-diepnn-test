@@ -1,0 +1,32 @@
+@startuml AD_User_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng thuộc đơn vị" (**SCR_User_List**);
+:Chọn thao tác "Thêm mới tài khoản";
+:Hiển thị form thêm mới tài khoản;
+:Nhập thông tin người dùng (Họ và tên, Email, Vai trò, Đơn vị mặc định thuộc danh sách người dùng có quyền truy cập);
+:Hệ thống tự động gợi ý tài khoản theo cú pháp: tên+viết tắt từ đầu tiên của họ và tên đệm;
+if (Tài khoản đã tồn tại?) then (Có)
+  :Tự động thêm số thứ tự (ví dụ: anhnh1);
+else (Không)
+  :Giữ nguyên tài khoản gợi ý;
+endif
+:Người dùng có thể chỉnh sửa tài khoản gợi ý;
+:Chọn thao tác "Lưu thông tin";
+:Kiểm tra dữ liệu hợp lệ;
+if (Dữ liệu hợp lệ?) then (Có)
+  :Tạo tài khoản người dùng mới;
+  if (Tạo tài khoản thành công?) then (Có)
+    :Thông báo "Tạo tài khoản thành công";
+    :Chuyển hướng về danh sách\n(**SCR_User_List**);
+  else (Không)
+    :Thông báo "Tạo tài khoản thất bại";
+    :Ở lại màn hình thêm mới\n(**SCR_User_Create**);
+  endif
+else (Không)
+  :Hiển thị thông báo lỗi dữ liệu;
+  :Ở lại màn hình thêm mới\n(**SCR_User_Create**);
+endif
+stop
+@enduml

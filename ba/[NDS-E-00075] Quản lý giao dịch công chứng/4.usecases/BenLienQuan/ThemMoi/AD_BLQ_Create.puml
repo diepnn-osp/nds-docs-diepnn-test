@@ -1,0 +1,15 @@
+@startuml AD_BLQ_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới bên liên quan
+
+start
+:Người dùng đang thực hiện thêm mới/chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Update** / **SCR_GDCC_Create**);
+:Người dùng bấm nút "Thêm mới bên liên quan";
+:Hệ thống thêm một khối bên liên quan mới;
+:Hệ thống hiển thị:
+- Nút "Thêm người tham gia giao dịch"
+- Nút "Xóa bên liên quan"
+- Ô lựa chọn thông tin bên liên quan;
+:Người dùng lựa chọn thông tin bên liên quan từ danh sách;
+stop
+@enduml

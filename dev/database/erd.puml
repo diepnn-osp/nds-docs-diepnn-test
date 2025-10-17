@@ -1,0 +1,257 @@
+@startuml ERD_Database
+
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam rectangle {
+  BorderColor #000000
+  BackgroundColor #F8F8F8
+}
+
+' Entity definitions
+entity "LoaiBenLienQuan" as LoaiBenLienQuan {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "ChungChiHanhNghe" as ChungChiHanhNghe {
+  * **id** : UUID <<PK>>
+  --
+  * congChungVienId : UUID <<FK>>
+  * soChungChi : VARCHAR
+  * donViCap : VARCHAR
+  * ngayCap : LocalDateTime
+  * ngayHieuLuc : LocalDateTime
+  * ngayHetHan : LocalDateTime
+  * fileDinhKemId : UUID
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "CongChungVien" as CongChungVien {
+  * **id** : UUID <<PK>>
+  --
+  * soThe : VARCHAR
+  * toChucCCId : UUID <<FK>>
+  * trangThai : TrangThaiCongChungVien
+  * laTruongVanPhong : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "DonVi" as DonVi {
+  * **id** : UUID <<PK>>
+  --
+  * loai : LoaiDonVi
+  * chaId : UUID <<FK>>
+  * ten : VARCHAR
+  * dienThoai : VARCHAR
+  * email : VARCHAR
+  * fax : VARCHAR
+  * webSite : VARCHAR
+  * tinhThanhId : UUID
+  * phuongXaId : UUID
+  * diaChiChiTiet : VARCHAR
+  * thongTinKhac : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "HoSoCongChung" as HoSoCongChung {
+  * **id** : UUID <<PK>>
+  --
+  * ngayCongChung : LocalDateTime
+  * soCongChung : VARCHAR
+  * loaiGiaoDichId : UUID <<FK>>
+  * tenGiaoDichId : UUID <<FK>>
+  * noiDungGiaoDich : TEXT
+  * giaTri : BigDecimal
+  * congChungVienId : UUID <<FK>>
+  * toChucCongChungId : UUID <<FK>>
+  * diaDiemCongChung : VARCHAR
+  * phiCongChung : BigDecimal
+  * thuLaoCongChung : BigDecimal
+  * fileVanBanCongChungDienTuId : UUID
+  * fileHoSoLuuTruDienTuId : UUID
+  * giaoDichCCLienQuanId : UUID <<FK>>
+  * ghiChu : TEXT
+  * trangThai : VARCHAR
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "LoaiGDCC" as LoaiGDCC {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "LoaiGiayTo" as LoaiGiayTo {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "LoaiTaiSan" as LoaiTaiSan {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "NguoiDung" as NguoiDung {
+  * **id** : UUID <<PK>>
+  --
+  * vaiTro : JSON
+  * anhDaiDien : UUID
+  * donViId : UUID <<FK>>
+  * chucVuId : UUID
+  * hoDem : VARCHAR
+  * ten : VARCHAR
+  * ngaySinh : LocalDateTime
+  * quocTichId : UUID
+  * danTocId : UUID
+  * sdtCoDinh : VARCHAR
+  * diDong : VARCHAR
+  * gioiTinhId : UUID
+  * email : VARCHAR
+  * diaChi : VARCHAR
+  * tinhThanhPhoId : UUID
+  * phuongXaId : UUID
+  * diaChiCu : VARCHAR
+  * tinhThanhPhoCuId : UUID
+  * phuongXaCuId : UUID
+  * soGiayTo : VARCHAR
+  * ngayCap : LocalDateTime
+  * noiCap : VARCHAR
+  * trangThaiHoatDong : BOOLEAN
+  * username : VARCHAR
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "TenGDCC" as TenGDCC {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "ToChucCongChung" as ToChucCongChung {
+  * **id** : UUID <<PK>>
+  --
+  * maSoThue : VARCHAR
+  * trangThai : TrangThaiToChucCC
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "ToChucThamGiaGD" as ToChucThamGiaGD {
+  * **id** : UUID <<PK>>
+  --
+  * hoSoId : UUID <<FK>>
+  * ten : VARCHAR
+  * maSoThue : VARCHAR
+  * diaChi : VARCHAR
+  * dienThoai : VARCHAR
+  * email : VARCHAR
+  * nguoiDaiDien : VARCHAR
+  * chucVuNguoiDaiDien : VARCHAR
+  * loaiBenThamGiaId : UUID <<FK>>
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "TrangThaiGDCC" as TrangThaiGDCC {
+  * **id** : UUID <<PK>>
+  --
+  * ten : VARCHAR
+  * trangThai : BOOLEAN
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+entity "ChuKySo" as ChuKySo {
+  * **id** : UUID <<PK>>
+  --
+  * doiTuongId : UUID <<FK>>
+  * loaiChuKySo : LoaiChuKySo
+  * soSerial : VARCHAR
+  * ngayHieuLuc : LocalDateTime
+  * ngayKetThuc : LocalDateTime
+  * nhaCungCap : VARCHAR
+  * trangThai : TrangThaiChuKySo
+  * thoiGianGui : LocalDateTime
+  * nguoiGuiId : UUID
+  * thoiGianDuyet : LocalDateTime
+  * nguoiDuyetId : UUID
+  * fileDinhKemId : UUID
+  * createdAt : LocalDateTime
+  * createdBy : UUID
+  * modifiedAt : LocalDateTime
+  * modifiedBy : UUID
+}
+
+' Relationships
+CongChungVien ||--o{ ChungChiHanhNghe : "có"
+CongChungVien }|--|| NguoiDung : "là"
+CongChungVien }|--|| ToChucCongChung : "thuộc"
+
+DonVi ||--o{ DonVi : "cha-con"
+DonVi ||--o{ NguoiDung : "có"
+ToChucCongChung ||--|| DonVi : "là"
+
+HoSoCongChung }|--|| LoaiGDCC : "có loại"
+HoSoCongChung }|--|| TenGDCC : "có tên"
+HoSoCongChung }|--|| CongChungVien : "được thực hiện bởi"
+HoSoCongChung }|--|| ToChucCongChung : "thuộc"
+HoSoCongChung }|--o| HoSoCongChung : "liên quan"
+
+ToChucThamGiaGD }|--|| HoSoCongChung : "thuộc"
+ToChucThamGiaGD }|--|| LoaiBenLienQuan : "có loại"
+ChuKySo }|--|| NguoiDung : "của"
+ChuKySo }|--|| DonVi : "của"
+
+@enduml

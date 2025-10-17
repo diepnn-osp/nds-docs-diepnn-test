@@ -1,0 +1,22 @@
+@startuml AD_DM_Donvi_Download_Temp
+!pragma layout smetana
+title Activity Diagram: Tải về file mẫu import danh mục đơn vị
+start
+:Người dùng truy cập chức năng "Danh sách danh mục đơn vị" (**SCR_DM_Donvi_List**);
+:Chọn thao tác "Tải về file mẫu import";
+:Lấy file mẫu từ danh mục file quản lý;
+if (Lấy file thành công?) then (Có)
+  :Tải về file mẫu về thiết bị;
+  if (Tải về thành công?) then (Có)
+    :Thông báo "Tải về file mẫu thành công";
+    :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+  else (Không)
+    :Thông báo "Tải về file mẫu thất bại";
+    :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+  endif
+else (Không)
+  :Thông báo "Không tìm thấy file mẫu";
+  :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+endif
+stop
+@enduml

@@ -1,0 +1,42 @@
+@startuml AD_GDCC_Delete
+!pragma layout smetana
+title Activity Diagram: Xóa giao dịch công chứng
+
+start
+:Kiểm tra trạng thái giao dịch;
+if (Trạng thái giao dịch == "Lưu nháp") then (Đúng)
+  :Kiểm tra quyền thực hiện chức năng;
+  if (Có quyền?) then (Có)
+    switch (Thao tác) 
+        case (Xóa 1 giao dịch)
+            :Người dùng chọn xóa 1 giao dịch công chứng;
+        case (Xóa nhiều giao dịch)
+            :Người dùng chọn 1 hoặc nhiều giao dịch công chứng trong danh sách (**SCR_GDCC_List**);
+            :Người dùng bấm nút "Xóa";
+        endswitch
+    :Hiển thị popup xác nhận xóa giao dịch;
+    if (Người dùng xác nhận?) then (Có)
+      :Xóa giao dịch công chứng khỏi **ENT_HoSoCongChung**;
+      :Xóa các bên liên quan khỏi **ENT_CaNhan**, **ENT_ToChuc**;
+      :Xóa tài sản giao dịch khỏi **ENT_TaiSan**;
+      :Xóa tài liệu đính kèm nếu có;
+      :Hệ thống không xóa các giao dịch khác liên quan;
+      note right
+        Không thể lưu chính thức 1 phụ lục 
+        hoặc văn bản hủy nếu giao dịch chính 
+        đang lưu nháp.
+      end note
+      :Hiển thị thông báo "Xóa giao dịch công chứng thành công";
+      :Chuyển hướng về danh sách giao dịch (**SCR_GDCC_List**);
+    else (Không)
+      :Đóng popup xác nhận;
+      :Giữ nguyên màn hình danh sách (**SCR_GDCC_List**);
+    endif
+  else (Không)
+    :Không hiển thị chức năng xóa giao dịch công chứng;
+  endif
+else (Sai)
+    :Không hiển thị chức năng xóa giao dịch công chứng;
+endif
+stop
+@enduml

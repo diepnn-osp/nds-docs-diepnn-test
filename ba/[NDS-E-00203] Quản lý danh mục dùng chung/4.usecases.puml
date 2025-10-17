@@ -1,0 +1,133 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Quản trị hệ thống" as Admin
+actor "Chuyên viên Cục BTTP" as CVBTP
+
+'==================== Quản lý danh mục dùng chung ====================
+package "Loại giao dịch công chứng" as DM_LoaiGDCC {
+    usecase "Xem danh sách Loại giao dịch công chứng" as UC_DM_LoaiGDCC_List
+    usecase "Thêm mới Loại giao dịch công chứng" as UC_DM_LoaiGDCC_Create
+    usecase "Chỉnh sửa Loại giao dịch công chứng" as UC_DM_LoaiGDCC_Update
+    usecase "Xóa Loại giao dịch công chứng" as UC_DM_LoaiGDCC_Delete
+    usecase "Tìm kiếm Loại giao dịch công chứng" as UC_DM_LoaiGDCC_Search
+}
+
+package "Tên giao dịch công chứng" as DM_TenGDCC {
+    usecase "Xem danh sách tên giao dịch công chứng" as UC_DM_TenGDCC_List
+    usecase "Thêm mới tên giao dịch công chứng" as UC_DM_TenGDCC_Create
+    usecase "Chỉnh sửa tên giao dịch công chứng" as UC_DM_TenGDCC_Update
+    usecase "Xóa tên giao dịch công chứng" as UC_DM_TenGDCC_Delete
+    usecase "Tìm kiếm tên giao dịch công chứng" as UC_DM_TenGDCC_Search
+}
+
+package "Loại tài sản giao dịch" as DM_LoaiTaiSan {
+    usecase "Xem danh sách Loại tài sản giao dịch" as UC_DM_LoaiTaiSan_List
+    usecase "Thêm mới Loại tài sản giao dịch" as UC_DM_LoaiTaiSan_Create
+    usecase "Chỉnh sửa Loại tài sản giao dịch" as UC_DM_LoaiTaiSan_Update
+    usecase "Xóa Loại tài sản giao dịch" as UC_DM_LoaiTaiSan_Delete
+    usecase "Tìm kiếm Loại tài sản giao dịch" as UC_DM_LoaiTaiSan_Search
+}
+
+package "Trạng thái giao dịch công chứng" as DM_TTGiaodichCC {
+    usecase "Xem danh sách trạng thái giao dịch công chứng" as UC_DM_TTGiaodichCC_List
+    usecase "Thêm mới trạng thái giao dịch công chứng" as UC_DM_TTGiaodichCC_Create
+    usecase "Chỉnh sửa trạng thái giao dịch công chứng" as UC_DM_TTGiaodichCC_Update
+    usecase "Xóa trạng thái giao dịch công chứng" as UC_DM_TTGiaodichCC_Delete
+    usecase "Tìm kiếm trạng thái giao dịch công chứng" as UC_DM_TTGiaodichCC_Search
+}
+
+package "Quản lý Danh mục giấy tờ tùy thân" as DM_Giayto {
+    usecase "Xem danh sách danh mục giấy tờ tùy thân" as UC_DM_Giayto_List
+    usecase "Thêm mới danh mục giấy tờ tùy thân" as UC_DM_Giayto_Create
+    usecase "Chỉnh sửa danh mục giấy tờ tùy thân" as UC_DM_Giayto_Update
+    usecase "Xóa danh mục giấy tờ tùy thân" as UC_DM_Giayto_Delete
+    usecase "Tìm kiếm danh mục giấy tờ tùy thân" as UC_DM_Giayto_Search
+}
+
+package "Quản lý Danh mục bên liên quan" as DM_BenLQ {
+    usecase "Xem danh sách danh mục bên liên quan" as UC_DM_BenLQ_List
+    usecase "Thêm mới danh mục bên liên quan" as UC_DM_BenLQ_Create
+    usecase "Chỉnh sửa danh mục bên liên quan" as UC_DM_BenLQ_Update
+    usecase "Xóa danh mục bên liên quan" as UC_DM_BenLQ_Delete
+    usecase "Tìm kiếm danh mục bên liên quan" as UC_DM_BenLQ_Search
+}
+
+package "Quản lý Danh mục Chức vụ" as DM_Chucvu {
+    usecase "Xem danh sách danh mục Chức vụ" as UC_DM_Chucvu_List
+    usecase "Thêm mới danh mục Chức vụ" as UC_DM_Chucvu_Create
+    usecase "Chỉnh sửa danh mục Chức vụ" as UC_DM_Chucvu_Update
+    usecase "Xóa danh mục Chức vụ" as UC_DM_Chucvu_Delete
+    usecase "Tìm kiếm danh mục Chức vụ" as UC_DM_Chucvu_Search
+}
+
+
+
+'==================== Liên kết Actor → UC ====================
+' Quản trị viên
+Admin -- UC_DM_LoaiGDCC_List
+Admin -- UC_DM_LoaiGDCC_Create
+Admin -- UC_DM_LoaiGDCC_Update
+Admin -- UC_DM_LoaiGDCC_Delete
+Admin -- UC_DM_LoaiGDCC_Search
+
+Admin -- UC_DM_TenGDCC_List
+Admin -- UC_DM_TenGDCC_Create
+Admin -- UC_DM_TenGDCC_Update
+Admin -- UC_DM_TenGDCC_Delete
+Admin -- UC_DM_TenGDCC_Search
+
+Admin -- UC_DM_LoaiTaiSan_List
+Admin -- UC_DM_LoaiTaiSan_Create
+Admin -- UC_DM_LoaiTaiSan_Update
+Admin -- UC_DM_LoaiTaiSan_Delete
+Admin -- UC_DM_LoaiTaiSan_Search
+
+Admin -- UC_DM_TTGiaodichCC_List
+Admin -- UC_DM_TTGiaodichCC_Create
+Admin -- UC_DM_TTGiaodichCC_Update
+Admin -- UC_DM_TTGiaodichCC_Delete
+Admin -- UC_DM_TTGiaodichCC_Search
+
+Admin -- UC_DM_Giayto_List
+Admin -- UC_DM_Giayto_Create
+Admin -- UC_DM_Giayto_Update
+Admin -- UC_DM_Giayto_Delete
+Admin -- UC_DM_Giayto_Search
+
+Admin -- UC_DM_BenLQ_List
+Admin -- UC_DM_BenLQ_Create
+Admin -- UC_DM_BenLQ_Update
+Admin -- UC_DM_BenLQ_Delete
+Admin -- UC_DM_BenLQ_Search
+
+Admin -- UC_DM_Chucvu_List
+Admin -- UC_DM_Chucvu_Create
+Admin -- UC_DM_Chucvu_Update
+Admin -- UC_DM_Chucvu_Delete
+Admin -- UC_DM_Chucvu_Search
+
+CVBTP -- UC_DM_LoaiGDCC_List
+CVBTP -- UC_DM_LoaiGDCC_Search
+
+CVBTP -- UC_DM_TenGDCC_List
+CVBTP -- UC_DM_TenGDCC_Search
+
+CVBTP -- UC_DM_LoaiTaiSan_List
+CVBTP -- UC_DM_LoaiTaiSan_Search
+
+CVBTP -- UC_DM_TTGiaodichCC_List
+CVBTP -- UC_DM_TTGiaodichCC_Search
+
+CVBTP -- UC_DM_Giayto_List
+CVBTP -- UC_DM_Giayto_Search
+
+CVBTP -- UC_DM_BenLQ_List
+CVBTP -- UC_DM_BenLQ_Search
+
+CVBTP -- UC_DM_Chucvu_List
+CVBTP -- UC_DM_Chucvu_Search
+
+@enduml

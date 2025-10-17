@@ -1,0 +1,12 @@
+@startuml AD_TSGD_Detail
+!pragma layout smetana
+title Activity Diagram: Xem chi tiết thông tin tài sản
+
+start
+:Người dùng thực hiện click vào nút xem chi tiết thông tin 1 tài sản;
+:Hiển thị popup chi tiết thông tin tài sản (**SCR_TSGD_Detail**);
+:Hệ thống hiển thị thông tin đã lưu theo từng loại tài sản;
+:Người dùng click nút đóng popup chi tiết thông tin tài sản;
+:Hệ thống đóng popup chi tiết thông tin tài sản;
+stop
+@enduml

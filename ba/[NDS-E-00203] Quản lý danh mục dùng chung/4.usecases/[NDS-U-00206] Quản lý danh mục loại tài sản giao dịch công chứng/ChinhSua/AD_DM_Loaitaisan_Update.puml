@@ -1,0 +1,37 @@
+@startuml DM_Loaitaisan_Update
+!pragma layout smetana
+title Activity Diagram: Chỉnh sửa danh mục loại tài sản giao dịch công chứng
+start
+:Truy cập chức năng "Danh sách danh mục loại tài sản giao dịch công chứng";
+:Chọn chỉnh sửa danh mục đã có trong danh sách;
+:Hiển thị form nhập thông tin chỉnh sửa;
+:Nhập thông tin chỉnh sửa danh mục;
+:Chọn thao tác;
+switch (Thao tác?)
+  case (Lưu thông tin)
+    :Kiểm tra dữ liệu hợp lệ?;
+    if (Dữ liệu hợp lệ?) then (Không)
+      :Hiển thị cảnh báo lỗi\n"Nhập thiếu thông tin bắt buộc";
+      :Ở lại màn hình\n(**DM_Loaitaisan_Update**);
+    else (Có)
+      :Ghi nhận dữ liệu danh mục loại tài sản giao dịch công chứng;
+      if (Ghi thành công?) then (Có)
+        :Thông báo "Chỉnh sửa thông tin danh mục thành công";
+        :Chuyển hướng về danh sách\n(**DM_Loaitaisan_List**);
+        stop
+      else (Không)
+        :Thông báo lỗi hệ thống;
+        :Ở lại màn hình\n(**DM_Loaitaisan_Update**);
+      endif
+    endif
+  case (Đóng)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+      :Hủy thao tác;
+      :Chuyển hướng về danh sách\n(**DM_Loaitaisan_List**);
+      stop
+    else (Không)
+      :Ở lại màn hình\n(**DM_Loaitaisan_Update**);
+    endif
+endswitch
+@enduml

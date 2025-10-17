@@ -1,0 +1,8 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+
+entity Donvi
+
+@enduml
+

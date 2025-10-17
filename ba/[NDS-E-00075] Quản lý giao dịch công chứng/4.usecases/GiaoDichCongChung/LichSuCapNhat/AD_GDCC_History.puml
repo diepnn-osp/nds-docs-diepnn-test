@@ -1,0 +1,23 @@
+@startuml AD_GDCC_History
+!pragma layout smetana
+title Activity Diagram: Xem lịch sử cập nhật thông tin giao dịch
+
+start
+:Người dùng truy cập thành công màn hình danh sách giao dịch \n(**SCR_GDCC_List**) hoặc màn hình chi tiết giao dịch \n(**SCR_GDCC_Detail**);
+:Kiểm tra quyền truy cập;
+if (Có quyền?) then (Yes)
+  :Người dùng bấm vào biểu tượng xem lịch sử cập nhật;
+  :Truy vấn dữ liệu lịch sử cập nhật giao dịch \n(**ENT_LichSuCapNhat**);
+  if (Có dữ liệu?) then (Yes)
+    :Áp dụng cấu hình để hiển thị thông tin;
+    :Hiển thị thông tin lịch sử cập nhật giao dịch theo cấu hình \n(**SCR_GDCC_History**);
+    :Người dùng bấm nút hoặc biểu tượng "Đóng";
+    :Hệ thống đóng popup;
+  else (No)
+    :Hiển thị "Không có dữ liệu lịch sử cập nhật thông tin giao dịch";
+  endif
+else (No)
+  :Không hiển thị chức năng xem lịch sử cập nhật thông tin giao dịch;
+endif
+stop
+@enduml

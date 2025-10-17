@@ -1,0 +1,54 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Chuyên viên STP, Lãnh đạo Sở Tư pháp, Lãnh đạo Phòng HCBTTP tại Sở Tư pháp" as STP
+actor "Lãnh đạo Bộ Tư pháp, Lãnh đạo Cục BTTP, Chuyên viên Cục BTTP" as BTP
+actor "Công chứng viên\Nhân viên TCHNCC" as TCHNCC
+
+'==================== Quản lý giao dịch công chứng ====================
+package "Quản lý giao dịch công chứng" as P_GDCC {
+    usecase "Xem danh sách giao dịch công chứng" as UC_GDCC_List
+    usecase "Thêm mới giao dịch công chứng" as UC_GDCC_Create
+    usecase "Chỉnh sửa giao dịch công chứng" as UC_GDCC_Update
+    usecase "Xem danh sách tài sản giao dịch" as UC_TSGD_List
+    usecase "Thêm mới tài sản giao dịch" as UC_TSGD_Create
+    usecase "Chỉnh sửa tài sản giao dịch" as UC_TSGD_Update
+    usecase "Xóa tài sản giao dịch" as UC_TSGD_Delete
+    usecase "Thêm mới bên liên quan" as UC_BLQ_Create
+    usecase "Xóa bên liên quan" as UC_BLQ_Delete
+    usecase "Xem danh sách người tham gia giao dịch" as UC_NTGGD_List
+    usecase "Thêm mới người tham gia giao dịch" as UC_NTGGD_Create
+    usecase "Chỉnh sửa người tham gia giao dịch" as UC_NTGGD_Update
+    usecase "Xóa người tham gia giao dịch" as UC_NTGGD_Delete
+}
+
+'==================== Liên kết UC → UC ====================
+UC_GDCC_Create ..> UC_TSGD_List : include
+UC_GDCC_Create ..> UC_NTGGD_List : include
+UC_GDCC_Create <.. UC_BLQ_Create : extend
+UC_GDCC_Create <.. UC_BLQ_Delete : extend
+
+UC_GDCC_Update ..> UC_TSGD_List : include
+UC_GDCC_Update ..> UC_NTGGD_List : include
+UC_GDCC_Update <.. UC_BLQ_Create : extend
+UC_GDCC_Update <.. UC_BLQ_Delete : extend
+
+UC_TSGD_List <.. UC_TSGD_Create : extend
+UC_TSGD_List <.. UC_TSGD_Update : extend
+UC_TSGD_List <.. UC_TSGD_Delete : extend
+
+UC_NTGGD_List <.. UC_NTGGD_Create : extend
+UC_NTGGD_List <.. UC_NTGGD_Update : extend
+UC_NTGGD_List <.. UC_NTGGD_Delete : extend
+
+'==================== Liên kết Actor → UC ====================
+TCHNCC -- UC_GDCC_Create
+TCHNCC -- UC_GDCC_Update
+TCHNCC -- UC_GDCC_List
+
+BTP -- UC_GDCC_List
+STP -- UC_GDCC_List
+
+@enduml

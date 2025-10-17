@@ -1,0 +1,38 @@
+@startuml CRUD_Matrix
+note as CRUD_Admin
+| Entity /Usecase       | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) | Assign (U) | View (R) | ChangePass (U) | SetTemp (U) | Limit (R) | Log (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: | :---------: |:--------: |:--------: |:------------: |:---------: |:--------: |
+| NguoiDung             |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     U     |      -       |     -     |    -     |
+| VaiTro                |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+| Auto Quyen            |    R     |     R      |     -      |     U      |     -      |     R      |   U         |     R     |     -     |      U       |     R     |    R     |
+| Manual Quyen          |    R     |     R      |     -      |     U      |     -      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+end note
+
+note as CRUD_CVBTP
+| Entity /Usecase       | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) | Assign (U) | View (R) | ChangePass (U) | SetTemp (U) | Limit (R) | Log (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: | :---------: |:--------: |:--------: |:------------: |:---------: |:--------: |
+| NguoiDung (cấp 1,2)    |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+| VaiTro (phạm vi)      |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+| Auto Quyen            |    R     |     R      |     -      |     -      |     -      |     R      |   -         |     R     |     -     |      -       |     R     |    R     |
+| Manual Quyen          |    R     |     R      |     -      |     U      |     -      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+end note
+
+note as CRUD_CVSTP
+| Entity /Usecase       | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) | Assign (U) | View (R) | ChangePass (U) | SetTemp (U) | Limit (R) | Log (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: | :---------: |:--------: |:--------: |:------------: |:---------: |:--------: |
+| NguoiDung (cấp 2)      |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+| VaiTro (phạm vi)      |    R     |     R      |     C      |     U      |     D      |     R      |   U         |     R     |     -     |      -       |     -     |    -     |
+| Auto Quyen            |    R     |     R      |     -      |     -      |     -      |     R      |   -         |     R     |     -     |      -       |     R     |    R     |
+| Manual Quyen          |    R     |     R      |     -      |     -      |     -      |     R      |   -         |     R     |     -     |      -       |     -     |    -     |
+end note
+
+note as CRUD_CCV
+| Entity /Usecase       | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) | Assign (U) | View (R) | ChangePass (U) | SetTemp (U) | Limit (R) | Log (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: | :---------: |:--------: |:--------: |:------------: |:---------: |:--------: |
+| NguoiDung (chính mình)|    -     |     -      |     -      |     -      |     -      |     -      |   -         |     R     |     U     |      -       |     -     |    R     |
+| VaiTro                |    -     |     -      |     -      |     -      |     -      |     -      |   -         |     R     |     -     |      -       |     -     |    -     |
+| Auto Quyen            |    -     |     -      |     -      |     -      |     -      |     -      |   -         |     -     |     -     |      -       |     R     |    R     |
+| Manual Quyen          |    -     |     -      |     -      |     -      |     -      |     -      |   -         |     -     |     -     |      -       |     -     |    -     |
+end note
+
+@enduml

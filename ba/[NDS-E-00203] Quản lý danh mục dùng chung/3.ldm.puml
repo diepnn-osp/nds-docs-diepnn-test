@@ -1,0 +1,64 @@
+@startuml ldm
+!pragma layout smetana
+left to right direction
+
+entity DM_LoaiGDCC
+entity DM_TenGDCC
+entity DM_Loaitaisan
+entity DM_TTGiaodichCC
+entity DM_Giayto
+entity DM_BenLQ
+entity DM_Chucvu
+
+entity DM_LoaiGDCC {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục Loại giao dịch công chứng
+  ten: string - Tên danh mục Loại giao dịch công chứng
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_TenGDCC {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục Tên giao dịch công chứng
+  ten: string - Tên danh mục Tên giao dịch công chứng
+  idLoaiGDCC: uuid - Khóa ngoại đến DM_LoaiGDCC
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_TTGiaodichCC {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục Trạng thái giao dịch công chứng
+  ten: string - Tên danh mục Trạng thái giao dịch công chứng
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_Loaitaisan {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục loại tài sản
+  ten: string - Tên danh mục loại tài sản
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_Giayto {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục giấy tờ
+  ten: string - Tên danh mục giấy tờ
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_BenLQ {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục bên liên quan
+  ten: string - Tên danh mục bên liên quan
+  idTenGDCC: uuid - Khóa ngoại đến DM_TenGDCC
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+entity DM_Chucvu {
+  *id: uuid - Khóa chính
+  ma: string - Mã danh mục chức vụ
+  ten: string - Tên danh mục chức vụ
+  trangThai: Trạng thái danh mục còn hiệu lực/hết hiệu lực
+}
+
+@enduml

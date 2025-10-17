@@ -1,0 +1,25 @@
+@startuml DM_TenGDCC_Search
+!pragma layout smetana
+title Activity Diagram: Tìm kiếm danh mục Tên giao dịch công chứng
+
+start
+:Người dùng truy cập màn hình danh sách danh mục tên giao dịch công chứng\n(**DM_TenGDCC_List**);
+:Người dùng điền thông tin tìm kiếm\n(Tên danh mục tên giao dịch công chứng theo từ khóa tìm kiếm, mã danh mục);
+:Người dùng bấm nút "Tìm kiếm";
+:Hệ thống truy vấn thông tin danh mục tên giao dịch công chứng\n(Truy vấn tên danh mục, Truy vấn đến mã danh mục);
+if (Có lỗi tìm kiếm?) then (Có)
+  :Hiển thị thông báo "Không tải được danh sách, vui lòng thử lại";
+else (Không)
+  if (Tìm thấy dữ liệu?) then (Có)
+    :Hệ thống hiển thị danh sách thông tin danh mục tên giao dịch công chứng theo từ khóa tìm kiếm;
+    if (Số lượng bản ghi lớn hơn 10?) then (Có)
+      :Hệ thống thực hiện phân trang, 10 bản ghi mỗi trang;
+    endif
+    :Danh sách danh mục tên giao dịch công chứng hiển thị theo thứ tự thời gian cập nhật từ mới tới cũ nhất;
+  else (Không)
+    :Hiển thị thông báo "Không tìm thấy dữ liệu danh mục tên giao dịch công chứng theo từ khóa tìm kiếm";
+  endif
+endif
+
+stop
+@enduml

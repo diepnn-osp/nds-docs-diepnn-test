@@ -1,0 +1,36 @@
+@startuml AD_DM_Loaitaisan_Create
+
+title Activity Diagram: Thêm mới thông tin danh mục loại tài sản giao dịch công chứng
+
+start
+:Người dùng chọn "Thêm mới" từ danh sách danh mục loại tài sản giao dịch công chứng;
+:Hiển thị form thêm mới;
+:Người dùng nhập thông tin danh mục loại tài sản giao dịch công chứng;
+:Chọn thao tác;
+  switch (Thao tác?)
+    case (Lưu)
+      :Hệ thống kiểm tra dữ liệu hợp lệ\n(tên danh mục không trùng lặp, các trường bắt buộc);
+      if (Hợp lệ?) then (Đúng)
+        :Thêm mới dữ liệu danh mục loại tài sản giao dịch công chứng;
+          if (Ghi thành công?) then (Có)
+            :Thông báo "Thêm mới thông tin danh mục loại tài sản giao dịch công chứng";
+            :Chuyển hướng về danh sách\n(**SCR_DM_Loaitaisan_List**);
+          else (Không)
+            :Thông báo lỗi hệ thống;
+            :Ở lại màn hình\n(**SCR_DM_Loaitaisan_Create**);
+          endif
+      else (Sai)
+        :Thông báo lỗi;
+        :Ở lại màn hình\n(**SCR_DM_Loaitaisan_Create**);
+      endif
+    case (Hủy)
+      :Xác nhận hủy thao tác?;
+      if (Đồng ý?) then (Có)
+        :Hủy thao tác;
+        :Chuyển hướng về danh sách\n(**SCR_DM_Loaitaisan_List**);
+      else (Không)
+        :Ở lại màn hình\n(**SCR_DM_Loaitaisan_Create**);
+      endif
+  endswitch
+  stop
+@enduml

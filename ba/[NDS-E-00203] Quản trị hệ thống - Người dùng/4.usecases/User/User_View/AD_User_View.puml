@@ -1,0 +1,30 @@
+@startuml AD_User_View
+!pragma layout smetana
+title Activity Diagram: Xem chi tiết thông tin tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng" (**SCR_User_List**);
+:Chọn tài khoản người dùng cần xem chi tiết;
+:Tải thông tin chi tiết tài khoản người dùng;
+if (Tải dữ liệu thành công?) then (Có)
+  :Hiển thị popup xem chi tiết thông tin tài khoản người dùng
+  (**SCR_User_View**);
+  note right
+    Thông tin hiển thị trong popup:
+    - Tên tài khoản
+    - Họ và tên
+    - Email
+    - Vai trò
+    - Đơn vị
+    - Trạng thái
+    - Thời gian tạo
+    - Thời gian cập nhật gần nhất
+    - Lịch sử đăng nhập gần nhất
+    - Danh sách các vai trò được gán
+  end note
+  :Người dùng chọn "Đóng" popup;
+  :Hệ thống đóng popup xem chi tiết, quay về danh sách tài khoản người dùng (**SCR_User_List**);
+else (Không)
+  :Hiển thị thông báo "Không tải được thông tin tài khoản, vui lòng thử lại";
+endif
+stop
+@enduml

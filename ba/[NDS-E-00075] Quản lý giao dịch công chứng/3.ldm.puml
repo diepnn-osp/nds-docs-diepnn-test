@@ -1,0 +1,25 @@
+@startuml ldm
+!pragma layout smetana
+left to right direction
+
+entity LichSuCapNhat
+entity HoSoCongChung
+entity TaiSan
+entity CaNhan
+entity ToChuc
+entity TaiLieu
+
+entity LichSuCapNhat {
+  *Id: uuid <<PK>> - Id bản ghi lịch sử cập nhật
+  LoaiThaoTac: string - Thêm mới/Cập nhật/Xóa
+  TruongThongTinCapNhat: string - Trường thông tin cập nhật
+  TruongThongTinId: string - Mã trường thông tin cập nhật
+  GiaTriCu: string - Thông tin giá trị cũ
+  GiaTriMoi: string - Thông tin thay đổi
+  CreatedAt: datetime - Ngày tạo
+  UpdatedAt: datetime      - Ngày cập nhật
+  CreatedBy: string - Người tạo
+  UpdatedBy: string - Người cập nhật
+}
+
+@enduml

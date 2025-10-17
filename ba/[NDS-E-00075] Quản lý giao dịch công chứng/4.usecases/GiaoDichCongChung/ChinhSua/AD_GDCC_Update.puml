@@ -1,0 +1,58 @@
+@startuml AD_GDCC_Update
+!pragma layout smetana
+title Activity Diagram: Chỉnh sửa giao dịch công chứng
+
+start
+  :Kiểm tra quyền thực hiện chức năng;
+  if (Có quyền?) then (Có)
+    :Người dùng bấm vào nút chỉnh sửa 1 giao dịch công chứng;
+    :Hiển thị form chỉnh sửa giao dịch công chứng;
+    :Cập nhật thông tin chung;
+    :Cập nhật thông tin bổ sung theo tên giao dịch;
+    :Thêm/Xóa bên liên quan (**AD_BLQ_Create** / **AD_BLQ_Delete**);
+    :Thêm/Sửa/Xóa người tham gia giao dịch (**AD_NTGGD_Create** / **AD_NTGGD_Update** / **AD_NTGGD_Delete**);
+    :Thêm/Sửa/Xóa tài sản giao dịch (**AD_TSGD_Create** / **AD_TSGD_Update** / **AD_TSGD_Delete**);
+    :Cập nhật tài liệu bằng cách xóa tài liệu cũ và tải lên file mới;
+
+    switch (Thao tác?)
+      case (Lưu nháp)
+        :Kiểm tra trạng thái;
+        if (Trạng thái = "Lưu nháp"?) then (yes)
+          :Kiểm tra logic các trường đã nhập;
+          if (Hợp lệ?) then (Đúng)
+            :Cập nhật thông tin giao dịch;
+            :Cập nhật lịch sử;
+            :Hiển thị thông báo "Cập nhật thông tin giao dịch thành công";
+            :Hiển thị màn hình chi tiết giao dịch (**SCR_GDCC_Detail**);
+          else (Sai)
+            :Hiển thị thông báo lỗi và giữ nguyên form (**SCR_GDCC_Update**);
+          endif
+        else (no)
+          :Không hiển thị chức năng lưu nháp;
+        endif
+      case (Lưu chính thức)
+        :Kiểm tra nghiệp vụ, các trường thông tin bắt buộc và logic dữ liệu;
+        if (Hợp lệ?) then (Đúng)
+          :Đổi trạng thái giao dịch thành "Lưu chính thức";
+          :Cập nhật thông tin vào giao dịch công chứng;
+          :Cập nhật lịch sử;
+          :Hiển thị thông báo "Cập nhật giao dịch công chứng thành công";
+          :Hiển thị màn hình chi tiết giao dịch (**SCR_GDCC_Detail**);
+        else (Sai)
+          :Hiển thị thông báo lỗi và giữ nguyên form (**SCR_GDCC_Update**);
+        endif
+
+      case (Hủy)
+        :Xác nhận hủy thao tác?;
+        if (Đồng ý?) then (Có)
+          :Hủy thao tác chỉnh sửa;
+          :Chuyển hướng về màn hình chi tiết giao dịch (**SCR_GDCC_Detail**);
+        else (Không)
+          :Đóng popup và giữ nguyên form (**SCR_GDCC_Update**);
+        endif
+    endswitch
+  else (Không)
+    :Không hiển thị chức năng chỉnh sửa giao dịch công chứng;
+  endif
+stop
+@enduml

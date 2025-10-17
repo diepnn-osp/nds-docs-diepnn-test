@@ -1,0 +1,31 @@
+@startuml DM_Chucvu_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới danh mục chức vụ
+start
+:Truy cập chức năng "Danh sách danh mục chức vụ";
+:Chọn thêm mới danh mục;
+:Hiển thị form nhập thông tin;
+:Nhập thông tin thông tin danh mục\n(Mã danh mục **Tự sinh theo hệ thống**, Tên danh mục);
+:Chọn thao tác;
+switch (Thao tác?)
+  case (Lưu thông tin)
+    :Ghi nhận dữ liệu danh mục chức vụ;
+    if (Ghi thành công?) then (Có)
+      :Thông báo "Thêm mới danh mục chức vụ thành công";
+      :Chuyển hướng về danh sách\n(**DM_Chucvu_List**);
+    else (Không)
+      :Thông báo lỗi hệ thống;
+      :Ở lại màn hình\n(**DM_Chucvu_Create**);
+    endif
+  case (Đóng)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+      :Hủy thao tác;
+      :Chuyển hướng về danh sách\n(**DM_Chucvu_List**);
+    else (Không)
+      :Ở lại màn hình\n(**DM_Chucvu_Create**);
+    endif
+endswitch
+
+stop
+@enduml

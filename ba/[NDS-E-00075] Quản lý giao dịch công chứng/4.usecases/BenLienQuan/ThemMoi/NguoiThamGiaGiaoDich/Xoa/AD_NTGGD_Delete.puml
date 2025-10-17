@@ -1,0 +1,17 @@
+@startuml AD_NTGGD_Delete
+!pragma layout smetana
+title Activity Diagram: Xóa người tham gia giao dịch trong danh sách
+
+start
+:Người dùng đang thực hiện thêm mới/chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Update** / **SCR_GDCC_Create**);
+:Người dùng bấm nút xóa 1 người tham gia giao dịch;
+:Hệ thống hiển thị popup yêu cầu xác nhận xóa;
+if (Người dùng xác nhận?) then (Có)
+  :Người dùng bấm nút "Xác nhận";
+  :Đóng popup xác nhận và cập nhật lại danh sách người tham gia giao dịch trên form giao dịch công chứng\n(**SCR_GDCC_Update** / **SCR_GDCC_Create**);
+else (Không)
+  :Người dùng hủy thao tác bằng cách bấm vào nút "Hủy" hoặc biểu tượng đóng popup;
+  :Hệ thống đóng popup;
+endif
+stop
+@enduml

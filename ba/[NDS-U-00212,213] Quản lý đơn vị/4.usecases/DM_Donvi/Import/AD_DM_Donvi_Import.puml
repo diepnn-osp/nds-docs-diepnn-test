@@ -1,0 +1,40 @@
+@startuml AD_DM_Donvi_Import
+!pragma layout smetana
+title Activity Diagram: Import dữ liệu danh mục đơn vị
+start
+:Người dùng truy cập chức năng "Danh sách danh mục đơn vị" (**SCR_DM_Donvi_List**);
+:Chọn thao tác "Import dữ liệu";
+:Chọn file import từ thiết bị;
+if (File đúng định dạng?) then (Có)
+  note right
+    Kiểm tra định dạng file:
+    - File phải có định dạng Excel (.xlsx, .xls)
+    - Dung lượng file tối đa không vượt quá 10MB
+    - File phải có cấu trúc đúng theo mẫu tải về (số cột, tên cột, thứ tự cột)
+  end note
+  :Đọc dữ liệu từ file;
+  :Kiểm tra dữ liệu import;
+  if (Dữ liệu hợp lệ?) then (Có)
+    :Import dữ liệu vào hệ thống;
+    :Thông báo "Import dữ liệu thành công";
+    :Chuyển hướng về danh sách\n(**SCR_DM_Donvi_List**);
+  else (Không)
+    :Hiển thị thông báo lỗi dữ liệu;
+    :Tự động tải về thiết bị file ghi chú từng bản ghi bị lỗi;
+    note right
+      File lỗi ghi chi tiết các lỗi có thể xảy ra:
+      - Kiểm tra trùng lặp tên đơn vị
+      - Tên danh mục không được để trống
+      - Loại đơn vị không hợp lệ (nếu giá trị không thuộc danh sách: BTP, STP, Khác)
+      - Thiếu thông tin Loại đơn vị cho đơn vị BTP/STP
+      - Email không đúng định dạng
+      - Số điện thoại không đúng định dạng
+    end note
+    :Ở lại màn hình import\n(**SCR_DM_Donvi_Import**);
+  endif
+else (Không)
+  :Thông báo "File không đúng định dạng";
+  :Ở lại màn hình import\n(**SCR_DM_Donvi_Import**);
+endif
+stop
+@enduml

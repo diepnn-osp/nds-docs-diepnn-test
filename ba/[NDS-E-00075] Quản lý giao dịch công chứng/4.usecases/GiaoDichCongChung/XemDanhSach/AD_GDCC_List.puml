@@ -1,0 +1,48 @@
+@startuml AD_GDCC_List
+!pragma layout smetana
+title Activity Diagram: Xem danh sách giao dịch công chứng
+
+start
+if (Có quyền truy cập) then (Được phép)
+  :Người dùng lựa chọn chức năng "Quản lý giao dịch công chứng" trên giao diện người dùng;
+  :Người dùng lựa chọn chức năng "Giao dịch công chứng giấy" hoặc "Giao dịch công chứng điện tử";
+  :Hệ thống truy vấn danh sách giao dịch theo loại công chứng mà người dùng đã chọn;
+  :Hệ thống kiểm tra vai trò người dùng;
+  if (Vai trò == "Cấp Bộ") then (Cấp Bộ)
+    :Truy vấn danh sách giao dịch công chứng toàn quốc;
+    :Loại bỏ các giao dịch đang ở trạng thái "Lưu nháp";
+    :Kiểm tra cấu hình hiển thị thông tin;
+    :Áp dụng cấu hình để hiển thị các cột thông tin tương ứng;
+    :Sắp xếp danh sách theo thứ tự ngày công chứng từ mới nhất đến cũ nhất;
+    :Sắp xếp những giao dịch có cùng ngày công chứng theo số công chứng từ lớn tới nhỏ;
+    :Sắp xếp những giao dịch có cùng số công chứng theo thời gian tạo từ mới nhất đến cũ nhất;
+    :Hiển thị danh sách giao dịch công chứng;
+
+  elseif (Vai trò == "Cấp thuộc Bộ") then (Cấp thuộc Bộ)
+    :Xác định địa bàn/Sở Tư pháp của người dùng;
+    :Truy vấn danh sách giao dịch của các tổ chức công chứng thuộc địa bàn đó đang lưu trữ;
+    :Loại bỏ các giao dịch đang ở trạng thái "Lưu nháp";
+    :Kiểm tra cấu hình hiển thị thông tin;
+    :Áp dụng cấu hình để hiển thị các cột thông tin tương ứng;
+    :Sắp xếp danh sách theo thứ tự ngày công chứng từ mới nhất đến cũ nhất;
+    :Sắp xếp những giao dịch có cùng ngày công chứng theo số công chứng từ lớn tới nhỏ;
+    :Sắp xếp những giao dịch có cùng số công chứng theo thời gian tạo từ mới nhất đến cũ nhất;
+    :Hiển thị danh sách giao dịch công chứng;
+
+  elseif (Vai trò == "Tổ chức công chứng") then (Tổ chức)
+    :Truy vấn danh sách giao dịch do tổ chức đang lưu trữ;
+    :Lấy cả giao dịch ở trạng thái "Lưu nháp" và "Lưu chính thức";
+    :Kiểm tra cấu hình hiển thị thông tin;
+    :Áp dụng cấu hình để hiển thị các cột thông tin tương ứng;
+    :Sắp xếp theo số công chứng từ lớn tới nhỏ;
+    :Hiển thị danh sách giao dịch công chứng theo từng loại trạng thái;
+
+  else (Không xác định)
+    :Hiển thị thông báo lỗi "Không xác định được vai trò người dùng";
+  endif
+
+else (Không có quyền)
+  :Ẩn chức năng "Quản lý giao dịch công chứng" khỏi giao diện người dùng;
+endif
+stop
+@enduml

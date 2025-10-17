@@ -1,0 +1,21 @@
+@startuml AD_Org_Detail
+!pragma layout smetana
+title Activity Diagram: Xem chi tiết thông tin tổ chức công chứng
+
+start
+:Người dùng truy cập thành công màn hình danh sách tổ chức công chứng;
+:Người dùng lựa chọn xem chi tiết 1 tổ chức công chứng;
+:Kiểm tra quyền truy cập;
+if (Có quyền?) then (Yes)
+  :Truy vấn dữ liệu tổ chức công chứng theo ID \n(**ENT_ToChucCongChung**);
+  if (Có dữ liệu?) then (Yes)
+    :Hiển thị thông tin chi tiết tổ chức công chứng \n(**SCR_Org_Detail**);
+    stop
+  else (No)
+    :Hiển thị "Không có dữ liệu tổ chức công chứng";
+  endif
+else (No)
+  :Thông báo lỗi "Không có quyền truy cập";
+  stop
+endif
+@enduml

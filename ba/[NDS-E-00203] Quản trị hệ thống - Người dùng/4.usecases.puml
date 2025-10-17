@@ -1,0 +1,110 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Quản trị hệ thống" as Admin
+actor "Chuyên viên Cục BTTP" as CVBTP
+actor "Chuyên viên STP" as CVSTP
+actor "Công chứng viên" as CCV
+
+'==================== Quản lý tài khoản người dùng ====================
+package "Quản lý tài khoản người dùng" as NguoiDung{
+    usecase "Xem danh sách tài khoản người dùng" as UC_NguoiDung_List
+    usecase "Thêm mới tài khoản người dùng" as UC_NguoiDung_Create
+    usecase "Chỉnh sửa thông tin tài khoản người dùng" as UC_NguoiDung_Update
+    usecase "Xóa tài khoản người dùng" as UC_NguoiDung_Delete
+    usecase "Tìm kiếm thông tin tài khoản người dùng" as UC_NguoiDung_Search
+    usecase "Đổi mật khẩu tài khoản người dùng" as UC_NguoiDung_ChangePass
+    usecase "Reset mật khẩu tài khoản người dùng" as UC_NguoiDung_ResetPass
+    usecase "Xem thông tin tài khoản người dùng" as UC_NguoiDung_Info
+    usecase "Cập nhật thông tin tài khoản người dùng" as UC_NguoiDung_UpdateInfo
+    usecase "Khóa/Mở khóa tài khoản người dùng" as UC_NguoiDung_LockUnlock
+}
+
+'==================== Quản lý vai trò ====================
+package "Quản lý vai trò" as VaiTro{
+    usecase "Xem danh sách vai trò" as UC_VaiTro_List
+    usecase "Thêm mới vai trò" as UC_VaiTro_Create
+    usecase "Chỉnh sửa thông tin vai trò" as UC_VaiTro_Update
+    usecase "Xóa vai trò" as UC_VaiTro_Delete
+    usecase "Gán vai trò cho tài khoản người dùng" as UC_NguoiDung_Assign
+    usecase "Xóa vai trò khỏi tài khoản người dùng" as UC_NguoiDung_Remove
+    usecase "Xem vai trò của tài khoản người dùng" as UC_NguoiDung_View
+}
+
+'==================== Phân quyền tự động ====================
+package "Phân quyền tự động" as AutoQuyen{
+    usecase "Thiết lập mẫu quyền theo cấp đơn vị" as UC_Auto_SetTemp
+    usecase "Tự động gán quyền mặc định theo cấp đơn vị" as UC_Auto_Assign
+    usecase "Cập nhật quyền khi thay đổi cấp đơn vị" as UC_Auto_Update
+    usecase "Giới hạn phạm vi truy cập dữ liệu theo cấp" as UC_Auto_Limit
+}
+
+'==================== Phân quyền thủ công ====================
+package "Phân quyền thủ công" as ManualQuyen{
+    usecase "Gán quyền thủ công đặc biệt cho người dùng" as UC_Manual_Assign
+    usecase "Kiểm tra và phê duyệt quyền thủ công vượt cấp" as UC_Manual_Approve
+    usecase "Ghi log và theo dõi lịch sử thay đổi quyền" as UC_Manual_Log
+    usecase "Thu hồi hoặc điều chỉnh quyền thủ công" as UC_Manual_Revoke
+}
+
+'==================== Liên kết Actor → UC ====================
+' Quản trị hệ thống (Đơn vị cha) - có quyền cao nhất
+Admin -- UC_NguoiDung_List
+Admin -- UC_NguoiDung_Create
+Admin -- UC_NguoiDung_Update
+Admin -- UC_NguoiDung_Delete
+Admin -- UC_NguoiDung_Search
+Admin -- UC_NguoiDung_ChangePass
+Admin -- UC_VaiTro_List
+Admin -- UC_VaiTro_Create
+Admin -- UC_VaiTro_Update
+Admin -- UC_VaiTro_Delete
+Admin -- UC_NguoiDung_Assign
+Admin -- UC_NguoiDung_Remove
+Admin -- UC_NguoiDung_View
+Admin -- UC_Auto_SetTemp
+Admin -- UC_Auto_Assign
+Admin -- UC_Auto_Update
+Admin -- UC_Auto_Limit
+Admin -- UC_Manual_Assign
+Admin -- UC_Manual_Approve
+Admin -- UC_Manual_Log
+Admin -- UC_Manual_Revoke
+
+' Chuyên viên Cục BTTP - quản lý trong phạm vi đơn vị cấp 1
+CVBTP -- UC_NguoiDung_List : "Xem tài khoản trong đơn vị cấp 1 và cấp 2 thuộc quyền quản lý"
+CVBTP -- UC_NguoiDung_Create : "Thêm tài khoản trong đơn vị cấp 1 và cấp 2 thuộc quyền quản lý"
+CVBTP -- UC_NguoiDung_Update : "Sửa tài khoản trong đơn vị cấp 1 và cấp 2 thuộc quyền quản lý"
+CVBTP -- UC_NguoiDung_Delete : "Xóa tài khoản trong đơn vị cấp 1 và cấp 2 thuộc quyền quản lý"
+CVBTP -- UC_NguoiDung_Search : "Tìm kiếm tài khoản trong đơn vị cấp 1 và cấp 2 thuộc quyền quản lý"
+CVBTP -- UC_VaiTro_List : "Xem vai trò có thể gán cho người dùng trong phạm vi quản lý"
+CVBTP -- UC_VaiTro_Create : "Thêm mới vai trò trong phạm vi quản lý"
+CVBTP -- UC_VaiTro_Update : "Sửa vai trò trong phạm vi quản lý"
+CVBTP -- UC_VaiTro_Delete : "Xóa vai trò trong phạm vi quản lý"
+CVBTP -- UC_NguoiDung_Assign : "Gán vai trò cho người dùng trong phạm vi quản lý"
+CVBTP -- UC_NguoiDung_Remove : "Xóa vai trò khỏi người dùng trong phạm vi quản lý"
+CVBTP -- UC_NguoiDung_View : "Xem vai trò của người dùng trong phạm vi quản lý"
+CVBTP -- UC_Manual_Assign : "Gán quyền thủ công cho người dùng trong phạm vi quản lý"
+
+' Chuyên viên STP - quản lý trong phạm vi đơn vị cấp 2
+CVSTP -- UC_NguoiDung_List : "Xem tài khoản trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_Create : "Thêm tài khoản trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_Update : "Sửa tài khoản trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_Delete : "Xóa tài khoản trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_Search : "Tìm kiếm tài khoản trong đơn vị cấp 2"
+CVSTP -- UC_VaiTro_List : "Xem vai trò có thể gán cho người dùng trong đơn vị cấp 2"
+CVSTP -- UC_VaiTro_Create : "Thêm mới vai trò trong phạm vi quản lý"
+CVSTP -- UC_VaiTro_Update : "Sửa vai trò trong phạm vi quản lý"
+CVSTP -- UC_VaiTro_Delete : "Xóa vai trò trong phạm vi quản lý"
+CVSTP -- UC_NguoiDung_Assign : "Gán vai trò cho người dùng trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_Remove : "Xóa vai trò khỏi người dùng trong đơn vị cấp 2"
+CVSTP -- UC_NguoiDung_View : "Xem vai trò của người dùng trong đơn vị cấp 2"
+
+' Công chứng viên
+CCV -- UC_NguoiDung_ChangePass : "Đổi mật khẩu chính mình"
+CCV -- UC_NguoiDung_View : "Xem vai trò của chính mình"
+CCV -- UC_Auto_Limit : "Truy cập chức năng trong phạm vi được cấp"
+
+@enduml

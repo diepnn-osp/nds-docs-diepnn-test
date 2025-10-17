@@ -1,0 +1,14 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+
+/'entity ThongBaoDaGui {
+  ThongBaoNhanId: int <<PK>> - ID thông báo nhận
+  ThongBaoId: int <<FK>> - ID thông báo
+  NguoiGuiId: int <<FK>> - ID người gửi
+  DonViGuiId: int <<FK>> - ID đơn vị gửi
+  ThoiGianGui: datetime - Thời gian gửi
+}
+'/
+
+@enduml

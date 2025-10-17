@@ -1,0 +1,53 @@
+@startuml AD_User_Search
+!pragma layout smetana
+title Activity Diagram: Tìm kiếm thông tin tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng" (**SCR_User_List**);
+:Nhập tiêu chí tìm kiếm;
+note right
+  Các tiêu chí tìm kiếm có thể:
+  - Tên tài khoản
+  - Họ và tên
+  - Email
+end note
+:Chọn thao tác "Tìm kiếm";
+:Kiểm tra tiêu chí tìm kiếm hợp lệ;
+if (Tiêu chí tìm kiếm hợp lệ?) then (Có)
+  :Tìm kiếm tài khoản người dùng theo phạm vi quyền;
+  if (Tìm kiếm thành công?) then (Có)
+    if (Có kết quả tìm kiếm?) then (Có)
+      :Hiển thị danh sách kết quả tìm kiếm;
+      note right
+        Danh sách kết quả tìm kiếm hiển thị:
+        - STT
+        - Tên tài khoản
+        - Họ và tên
+        - Email
+        - Vai trò
+        - Đơn vị
+        - Trạng thái
+      end note
+      if (Số lượng bản ghi > 10?) then (Có)
+        :Thực hiện phân trang (10 bản ghi/trang);
+      else (Không)
+        :Hiển thị toàn bộ kết quả;
+      endif
+      note right
+        Từ danh sách kết quả, người dùng có thể thực hiện:
+        - Xem chi tiết
+        - Sửa (nếu có quyền)
+        - Xóa (nếu có quyền)
+        - Đổi mật khẩu (nếu có quyền)
+        - Gán/Xóa vai trò (nếu có quyền)
+      end note
+    else (Không)
+      :Hiển thị thông báo "Không tìm thấy tài khoản phù hợp";
+    endif
+  else (Không)
+    :Hiển thị thông báo "Tìm kiếm thất bại, vui lòng thử lại";
+  endif
+else (Không)
+  :Hiển thị thông báo lỗi tìm kiếm;
+endif
+stop
+@enduml

@@ -1,0 +1,16 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+
+entity ToChucCongChung
+entity CongChungVien
+entity LichSuCapNhat
+entity Donvi
+
+ToChucCongChung ||..{ CongChungVien
+ToChucCongChung ||..{ LichSuCapNhat
+ToChucCongChung ||..|| DonVi
+
+@enduml
+
+

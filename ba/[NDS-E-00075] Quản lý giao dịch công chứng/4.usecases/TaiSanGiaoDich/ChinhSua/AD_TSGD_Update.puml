@@ -1,0 +1,39 @@
+@startuml AD_TSGD_Update
+!pragma layout smetana
+title Activity Diagram: Chỉnh sửa thông tin tài sản
+
+start
+:Người dùng thực hiện chỉnh sửa thông tin 1 tài sản;
+:Hiển thị popup chỉnh sửa thông tin tài sản;
+:Hệ thống đổ dữ liệu tài sản ra popup chỉnh sửa thông tin;
+:Người dùng chọn loại tài sản (nếu muốn thay đổi);
+:Người dùng cập nhật thông tin tài sản;
+:Chọn thao tác;
+switch (Thao tác?)
+  case (Lưu)
+    :Kiểm tra tính hợp lệ dữ liệu tài sản;
+    if (Hợp lệ?) then (Đúng)
+      :Ghi nhận dữ liệu tài sản vào giao dịch công chứng;
+      if (Ghi thành công?) then (Có)
+        :Thông báo "Cập nhật thông tin tài sản thành công";
+        :Hiển thị kết quả trên form thêm hoặc chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Create / SCR_GDCC_Update**);
+      else (Không)
+        :Thông báo lỗi hệ thống;
+        :Không đóng popup chỉnh sửa thông tin tài sản\n(**SCR_TSGD_Update**);
+      endif
+    else (Sai)
+      :Thông báo lỗi dữ liệu nhập không hợp lệ;
+      :Không đóng popup chỉnh sửa thông tin tài sản\n(**SCR_TSGD_Update**);
+    endif
+  case (Hủy)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+      :Hủy thao tác chỉnh sửa thông tin tài sản;
+      :Quay lại form giao dịch công chứng\n(**SCR_GDCC_Create / SCR_GDCC_Update**);
+      stop
+    else (Không)
+      :Ở lại popup chỉnh sửa thông tin tài sản\n(**SCR_TSGD_Update**);
+    endif
+endswitch
+stop
+@enduml

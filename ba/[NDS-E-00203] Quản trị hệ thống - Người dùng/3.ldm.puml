@@ -1,0 +1,12 @@
+@startuml ldm
+!pragma layout smetana
+left to right direction
+
+entity Donvi
+entity NguoiDung
+entity VaiTro
+entity Quyen
+entity NguoiDung_VaiTro
+'Đã mô tả ở phần Dùng chung
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+entity CongChungVien
+entity ChungChiHanhNghe
+entity LichSuCapNhat
+entity ToChucCongChung
+
+CongChungVien ||..|| ChungChiHanhNghe
+CongChungVien ||..|| NguoiDung
+ToChucCongChung ||..{ CongChungVien
+CongChungVien ||..{ LichSuCapNhat
+ChungChiHanhNghe ||..{ LichSuCapNhat
+
+@enduml
+
+

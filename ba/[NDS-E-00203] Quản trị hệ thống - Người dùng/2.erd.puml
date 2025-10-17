@@ -1,0 +1,13 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+
+' Quản lý người dùng và vai trò
+entity NguoiDung
+entity VaiTro
+entity Quyen
+
+NguoiDung }..{  VaiTro
+VaiTro }..{ Quyen
+@enduml
+

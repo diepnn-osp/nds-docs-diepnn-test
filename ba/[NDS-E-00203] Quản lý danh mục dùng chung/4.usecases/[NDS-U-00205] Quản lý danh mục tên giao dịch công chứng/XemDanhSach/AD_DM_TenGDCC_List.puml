@@ -1,0 +1,31 @@
+@startuml DM_TenGDCC_List
+!pragma layout smetana
+title Activity Diagram: Xem danh sách danh mục Tên giao dịch công chứng
+
+start
+
+:Người dùng mở menu chọn "Danh mục tên giao dịch công chứng";
+:Hệ thống kiểm tra người dùng;
+if (Có quyền truy cập?) then (Có)
+  :Hệ thống hiển thị danh sách danh mục tên giao dịch công chứng với các trường:\nSTT, Mã loại danh mục, tên danh mục, trạng thái danh mục;
+  if (Có lỗi tải danh sách?) then (Có)
+    :Hiển thị thông báo "Không tải được danh sách, vui lòng thử lại";
+  else (Không)
+    if (Không có dữ liệu?) then (Có)
+      :Hiển thị thông báo "Không có dữ liệu danh mục tên giao dịch công chứng";
+    else (Không)
+      :Hệ thống hiển thị danh sách danh mục tên giao dịch công chứng;
+      if (Số lượng bản ghi lớn hơn 10?) then (Có)
+        :Hệ thống thực hiện phân trang, 10 bản ghi mỗi trang;
+      endif
+      :Danh sách danh mục tên giao dịch công chứng hiển thị theo thứ tự thời gian cập nhật từ mới tới cũ nhất;
+      :Từ danh sách, người dùng có thể mở chi tiết, sửa, xóa, xem lịch sử\n(nếu có quyền và đúng trạng thái);
+      :Hệ thống cho phép tìm kiếm danh mục tên giao dịch công chứng\n(chi tiết tại UC_DM_TenGDCC_Search);
+    endif
+  endif
+else (Không)
+  :Không hiển thị menu "Danh mục tên giao dịch công chứng";
+endif
+
+stop
+@enduml

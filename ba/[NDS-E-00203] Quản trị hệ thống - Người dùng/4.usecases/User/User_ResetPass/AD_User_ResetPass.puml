@@ -1,0 +1,30 @@
+@startuml AD_User_ResetPass
+!pragma layout smetana
+title Activity Diagram: Reset mật khẩu người dùng;
+start
+:Người dùng (Quản trị viên/CVSTP/CVBTP) đăng nhập hệ thống;
+:Người dùng truy cập chức năng "Quản lý người dùng" từ menu;
+:Hiển thị danh sách người dùng (**SCR_User_List**);
+:Người dùng tìm kiếm hoặc chọn người dùng để thực hiện reset mật khẩu;
+if (Tìm kiếm thành công?) then (Có)
+  :Hiển thị kết quả tìm kiếm hoặc thông tin người dùng đã chọn;
+  :Hiển thị trang xác nhận reset mật khẩu (**SCR_User_ResetPass**);
+  note right
+    Trang hiển thị:
+    - Thông tin tài khoản người dùng cần reset mật khẩu
+    - Lưu ý: Mật khẩu mới sẽ được gửi về email của người dùng
+    - Lưu ý: Mật khẩu mặc định được thiết lập từ hệ thống BR13 Rule
+  end note
+  if (Người dùng xác nhận reset mật khẩu?) then (Có)
+    :Hệ thống reset mật khẩu theo quy tắc BR13 (Business_rules.md);
+    :Hệ thống gửi email thông báo mật khẩu mới cho người dùng;
+    :Hiển thị thông báo "Reset mật khẩu thành công";
+    :Ghi log lịch sử reset mật khẩu;
+  else (Không)
+    :Quay về danh sách người dùng;
+  endif
+else (Không)
+  :Hiển thị thông báo "Không tìm thấy người dùng, vui lòng thử lại";
+endif
+stop
+@enduml

@@ -1,0 +1,39 @@
+@startuml AD_NTGGD_Update
+!pragma layout smetana
+title Activity Diagram: Chỉnh sửa người tham gia giao dịch
+
+start
+:Người dùng đang thao tác trong form thêm mới/chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Update** / **SCR_GDCC_Create**);
+:Người dùng bấm "chỉnh sửa" 1 người tham gia giao dịch;
+:Hiển thị popup chỉnh sửa thông tin người tham gia giao dịch (**SCR_NTGGD_Update**);
+:Hiển thị dữ liệu đã lưu ;
+:Người dùng cập nhật thông tin chi tiết người tham gia giao dịch;
+:Chọn thao tác;
+switch (Thao tác?)
+case (Lưu)
+    :Kiểm tra tính hợp lệ dữ liệu người tham gia giao dịch;
+    if (Hợp lệ?) then (Đúng)
+    :Cập nhật dữ liệu người tham gia giao dịch vào giao dịch công chứng;
+    if (Ghi thành công?) then (Có)
+        :Thông báo "Cập nhật thông tin người tham gia giao dịch thành công";
+        :Hiển thị kết quả trong danh sách người tham gia giao dịch của bên liên quan\n(**SCR_GDCC_Create** / **SCR_GDCC_Update**);
+    else (Không)
+        :Thông báo lỗi hệ thống;
+        :Không đóng popup chỉnh sửa người tham gia giao dịch\n(**SCR_NTGGD_Update**);
+    endif
+    else (Sai)
+    :Thông báo lỗi dữ liệu nhập không hợp lệ;
+    :Không đóng popup chỉnh sửa người tham gia giao dịch\n(**SCR_NTGGD_Update**);
+    endif
+case (Hủy)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+        :Hủy thao tác chỉnh sửa người tham gia giao dịch;
+        :Quay lại form giao dịch công chứng\n(**SCR_GDCC_Create** / **SCR_GDCC_Update**);    
+    else (Không)
+        :Ở lại popup chỉnh sửa người tham gia giao dịch\n(**SCR_NTGGD_Update**);
+    endif
+endswitch
+
+stop
+@enduml

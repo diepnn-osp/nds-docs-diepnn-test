@@ -1,0 +1,12 @@
+@startuml CRUD_Matrix
+note as CRUD_Matrix
+| Entity / Use Case     | UC_Noti_List | UC_Noti_Detail | UC_Noti_Create | UC_Noti_Update | UC_Noti_Delete | UC_Noti_Search | 
+| :-------------------- | :---------: | :-------------: | :-------------: | :-------------: | :-------------: | :-------------: | 
+| ThongBao              |      R      |        R        |        C        |        U        |        D        |        R        |
+| NguoiDung             |      R      |        R        |        -        |        -        |        -        |        R        |
+| DonVi                 |      -      |        R        |        -        |        -        |        -        |        -        |
+| FileDinhKem           |      -      |        R        |        C        |        U        |        D        |        -        |
+| ThongBaoNhan          |      -      |        -        |        C        |        -        |        -        |        -        |
+| LichSuThongBao        |      -      |        R        |        C        |        C        |        C        |        -        |
+end note
+@enduml

@@ -1,0 +1,40 @@
+@startuml AD_TSGD_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới tài sản
+
+start
+:Người dùng bấm "Thêm mới tài sản";
+:Hiển thị popup nhập thông tin tài sản;
+
+:Hiển thị ô chọn 1 loại tài sản từ danh sách tài sản giao dịch dựa trên tên giao dịch công chứng đã chọn;
+:Người dùng chọn loại tài sản;
+:Hiển thị các field tương ứng với loại tài sản đã chọn;
+:Người dùng nhập thông tin chi tiết tài sản;
+:Chọn thao tác;
+switch (Thao tác?)
+  case (Lưu)
+    :Kiểm tra tính hợp lệ dữ liệu tài sản;
+    if (Hợp lệ?) then (Đúng)
+      :Ghi nhận dữ liệu tài sản vào giao dịch công chứng;
+      if (Ghi thành công?) then (Có)
+        :Thông báo "Thêm mới tài sản thành công";
+        :Hiển thị kết quả trên form thêm hoặc chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Create / SCR_GDCC_Update**);
+      else (Không)
+        :Thông báo lỗi hệ thống;
+        :Không đóng popup thêm mới tài sản\n(**SCR_TSGD_Create**);
+      endif
+    else (Sai)
+      :Thông báo lỗi dữ liệu nhập không hợp lệ;
+      :Không đóng popup thêm mới tài sản\n(**SCR_TSGD_Create**);
+    endif
+  case (Hủy)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+      :Hủy thao tác thêm mới tài sản;
+      :Quay lại form giao dịch công chứng\n(**SCR_GDCC_Create / SCR_GDCC_Update**);
+    else (Không)
+      :Ở lại popup thêm mới tài sản\n(**SCR_TSGD_Create**);
+    endif
+endswitch
+stop
+@enduml

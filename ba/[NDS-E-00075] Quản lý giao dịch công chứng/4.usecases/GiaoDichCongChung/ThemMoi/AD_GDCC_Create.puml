@@ -1,0 +1,81 @@
+@startuml AD_GDCC_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới giao dịch công chứng
+
+start
+:Kiểm tra quyền thực hiện chức năng;
+if (Có quyền?) then (Có)
+  :Người dùng bấm nút "Thêm mới" giao dịch công chứng;
+  :Hiển thị form thêm mới giao dịch công chứng;
+else (Không)
+  :Không hiển thị chức năng thêm mới giao dịch công chứng;
+  stop
+endif
+
+:Điền thông tin chung;
+:Điền thông tin bổ sung theo tên giao dịch;
+switch (Tên giao dịch?)
+  case (Ủy quyền)
+    :Điền thời hạn ủy quyền;
+  case (Thế chấp)
+    :Điền thông tin giải chấp;
+    if (Trạng thái giải chấp == "Đã giải chấp") then (Có)
+      :Điền thông tin giải chấp chi tiết;
+    endif
+  case (Hủy hoặc Phụ lục)
+    :Tham chiếu (**AD_GDCC_Revoke** hoặc **AD_GDCC_Appendix**); 
+endswitch
+
+:Thêm/Xóa bên liên quan (**AD_BLQ_Create** / **AD_BLQ_Delete**);
+:Thêm/Sửa/Xóa người tham gia giao dịch vào bên liên quan (**AD_NTGGD_Create** / **AD_NTGGD_Update** / **AD_NTGGD_Delete**);
+:Thêm/Sửa/Xóa tài sản giao dịch (**AD_TSGD_Create** / **AD_TSGD_Update** / **AD_TSGD_Delete**);
+
+switch (Loại công chứng?)
+  case (Điện tử)
+    :Tải lên văn bản công chứng điện tử;
+    :Tải lên văn bản sửa lỗi kỹ thuật (nếu có);
+    :Tải lên các file thành phần hồ sơ khác;
+  case (Giấy)
+    :Tải lên văn bản công chứng điện tử (nếu có);
+    :Tải lên hồ sơ lưu trữ điện tử (nếu có);
+    :Tải lên các file thành phần hồ sơ khác (nếu có);
+endswitch
+:Chọn thao tác;
+switch (Thao tác?)
+  case (Lưu nháp)
+    :Kiểm tra logic các trường đã nhập;
+    if (Hợp lệ?) then (Đúng)
+        :Đổi trạng thái giao dịch thành "Lưu nháp";
+        :Lưu dữ liệu giao dịch;
+        :Cập nhật lịch sử;
+        :Hiển thị thông báo "Đã lưu nháp giao dịch công chứng";
+        :Chuyển hướng đến màn hình chi tiết giao dịch (**SCR_GDCC_Detail**);
+    else (Sai)
+        :Hiển thị thông báo lỗi và giữ nguyên form (**SCR_GDCC_Create**);
+    endif
+  case (Lưu chính thức)
+    :Kiểm tra các trường bắt buộc;
+    :Kiểm tra logic dữ liệu;
+    :Kiểm tra nghiệp vụ;
+    if (Hợp lệ?) then (Đúng)
+      :Đổi trạng thái giao dịch thành "Lưu chính thức";
+      :Lưu thông tin giao dịch;
+      :Cập nhật lịch sử;
+      :Hiển thị thông báo "Thêm mới giao dịch công chứng thành công";
+      :Chuyển hướng đến màn hình chi tiết giao dịch (**SCR_GDCC_Detail**);
+    else (Sai)
+      :Hiển thị thông báo lỗi;
+      :Ở lại màn hình thêm mới (**SCR_GDCC_Create**);
+    endif
+
+  case (Hủy)
+    :Xác nhận hủy thao tác;
+    if (Đồng ý?) then (Có)
+      :Hủy thao tác;
+      :Chuyển hướng về màn hình danh sách giao dịch (**SCR_GDCC_List**);
+    else (Không)
+      :Ở lại màn hình thêm mới (**SCR_GDCC_Create**);
+    endif
+endswitch
+stop
+@enduml

@@ -1,0 +1,57 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Chuyên viên STP" as CVSTP
+actor "Lãnh đạo Sở Tư pháp, Lãnh đạo Phòng HCBTTP tại Sở Tư pháp" as LeaderSTP
+actor "Lãnh đạo Bộ Tư pháp, Lãnh đạo Cục BTTP, Chuyên viên Cục BTTP" as LeaderBTP
+actor "Công chứng viên tại TCHNCC" as CCV
+actor "Nhân viên tại TCHNCC" as Staff
+
+'==================== Quản lý chữ ký số ====================
+package "Quản lý chữ ký số" as P_DigitalSign {
+    usecase "Xem danh sách chữ ký số" as UC_Sign_List
+    usecase "Xem chi tiết chữ ký số" as UC_Sign_Detail
+    usecase "Tìm kiếm  chữ ký số" as UC_Sign_Search
+    usecase "Đăng ký chữ ký số" as UC_Sign_Create
+    usecase "Sửa chữ ký số" as UC_Sign_Update
+    usecase "Xóa chữ ký số" as UC_Sign_Delete
+    usecase "Duyệt chữ ký số" as UC_Sign_Approve
+    usecase "Từ chối phê duyệt  chữ ký số" as UC_Sign_Reject
+    usecase "Gửi duyệt chữ ký số" as UC_Sign_Submit
+    usecase "Xem lịch sử chữ ký số" as UC_Sign_History
+}
+
+'==================== Liên kết Actor → UC ====================
+' Chuyên viên STP
+CVSTP -- UC_Sign_List
+CVSTP -- UC_Sign_Detail
+CVSTP -- UC_Sign_Search
+CVSTP -- UC_Sign_History
+' Lãnh đạo Sở Tư pháp / Phòng HCBTTP
+LeaderSTP -- UC_Sign_List
+LeaderSTP -- UC_Sign_Detail
+LeaderSTP -- UC_Sign_Search
+LeaderSTP -- UC_Sign_History
+LeaderSTP -- UC_Sign_Approve
+LeaderSTP -- UC_Sign_Reject
+' Lãnh đạo Bộ Tư pháp / Cục BTTP / Chuyên viên Cục BTTP
+UC_Sign_List -- LeaderBTP
+UC_Sign_Detail -- LeaderBTP
+UC_Sign_Search -- LeaderBTP
+UC_Sign_History -- LeaderBTP
+' Công chứng viên tại TCHNCC
+Staff <|-- CCV
+UC_Sign_History -- CCV
+
+
+' Nhân viên tại TCHNCC
+UC_Sign_List -- Staff
+UC_Sign_Detail -- Staff
+UC_Sign_Search -- Staff
+UC_Sign_Create -- Staff
+UC_Sign_Update -- Staff
+UC_Sign_Delete -- Staff
+UC_Sign_Submit -- Staff
+@enduml

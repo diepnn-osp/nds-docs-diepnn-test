@@ -1,0 +1,37 @@
+@startuml AD_User_ChangePass
+!pragma layout smetana
+title Activity Diagram: Đổi mật khẩu tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Quản lý tài khoản cá nhân";
+:Nhấn nút "Đổi mật khẩu";
+:Hiển thị form đổi mật khẩu cá nhân (**SCR_User_ChangePass**);
+note right
+  Form hiển thị:
+  - Tên tài khoản (không cho phép sửa)
+  - Mật khẩu cũ
+  - Mật khẩu mới
+  - Xác nhận mật khẩu mới
+end note
+:Nhập mật khẩu cũ;
+:Nhập mật khẩu mới;
+:Nhập xác nhận mật khẩu mới;
+:Nhấn nút "Xác nhận";
+if (Mật khẩu cũ đúng?) then (Có)
+  if (Mật khẩu mới và xác nhận khớp?) then (Có)
+    if (Mật khẩu mới tuân thủ chính sách?) then (Có)
+      :Cập nhật mật khẩu mới cho tài khoản;
+      :Ghi log lịch sử đổi mật khẩu;
+      :Hiển thị thông báo "Đổi mật khẩu thành công";
+      :Đóng form, quay về trang chủ;
+    else (Không)
+      :Hiển thị thông báo "Mật khẩu mới không tuân thủ chính sách mật khẩu";
+      :Hiển thị yêu cầu về mật khẩu (độ dài, ký tự đặc biệt, v.v.)";
+    endif
+  else (Không)
+    :Hiển thị thông báo "Mật khẩu mới và xác nhận không khớp";
+  endif
+else (Không)
+  :Hiển thị thông báo "Mật khẩu cũ không đúng";
+endif
+stop
+@enduml

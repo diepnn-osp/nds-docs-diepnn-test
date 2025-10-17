@@ -1,0 +1,29 @@
+@startuml AD_Noti_List
+!pragma layout smetana
+title Activity Diagram: Xem danh sách thông báo
+
+start
+:Người dùng truy cập chức năng "Quản lý thông báo";
+:Kiểm tra phân quyền tài khoản;
+
+if (Tài khoản có quyền Xem thông báo?) then (Có)
+  :Người dùng chọn tab danh sách thông báo;
+  Switch (Cấp cơ quan)
+    case (Thuộc Bộ Tư pháp?) 
+    :Tải danh sách thông báo được gửi bởi Bộ Tư pháp;
+    case (Thuộc Sở Tư pháp?) 
+    :Tải danh sách thông báo được gửi bởi Bộ Tư pháp\nvà nội bộ Sở Tư pháp;
+    case (Thuộc TCHNCC?)
+    :Tải danh sách thông báo được gửi bởi Bộ Tư pháp,\nSở Tư pháp và nội bộ TCHNCC;
+  endswitch
+  if (Danh sách thông báo có dữ liệu?) then (Có)
+  :Hiển thị màn hình danh sách thông báo;
+  else (Không)
+    :Hiển thị thông báo "Không có dữ liệu thông báo";
+  endif
+else (Không)
+  :Hiển thị thông báo "Không có quyền truy cập";
+endif
+stop
+
+@enduml

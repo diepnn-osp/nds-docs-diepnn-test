@@ -1,0 +1,24 @@
+@startuml AD_DM_Donvi_Search
+!pragma layout smetana
+title Activity Diagram: Tìm kiếm danh mục đơn vị
+
+start
+
+:Người dùng đang ở màn hình danh sách danh mục đơn vị;
+:Nhập tiêu chí tìm kiếm;
+:Lọc theo điều kiện loại danh mục;
+:Chọn thao tác tìm kiếm;
+:Kiểm tra dữ liệu tìm kiếm;
+if (Có dữ liệu tìm kiếm?) then (Có)
+  :Hiển thị kết quả tìm kiếm;
+  note right
+    Tùy theo phân quyền, người dùng có thể thực hiện các thao tác trên kết quả tìm kiếm:
+    - Sửa (nếu có quyền)
+    - Xóa (nếu có quyền)
+  end note
+else (Không)
+  :Hiển thị thông báo "Không tìm thấy kết quả phù hợp";
+endif
+
+stop
+@enduml

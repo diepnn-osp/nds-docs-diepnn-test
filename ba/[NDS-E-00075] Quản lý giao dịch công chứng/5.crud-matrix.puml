@@ -1,0 +1,12 @@
+@startuml CRUD_Matrix
+note as CRUD_Matrix
+| Entity / Use Case | UC_GDCC_Create | UC_GDCC_Update | UC_TSGD_List | UC_TSGD_Create | UC_TSGD_Update | UC_TSGD_Delete | UC_NTGGD_List | UC_NTGGD_Create | UC_NTGGD_Update | UC_NTGGD_Delete | UC_BLQ_Create | UC_BLQ_Delete   |
+| :---------------- | :------------: | :------------: | :----------: | :------------: | :------------: | :------------: | :-----------: | :-------------: | :-------------: | :-------------: | :-----------: | :-------------: |
+| ENT_HoSoCongChung |       C        |      R U       |      -       |       -        |       -        |       -        |       -       |        -        |        -        |        -        |       -       |        -        |
+| ENT_TaiSan        |       C        |      R U       |      R       |       C        |      R U       |       D        |       -       |        -        |        -        |        -        |       -       |        -        |
+| ENT_CaNhan        |       C        |      R U       |      -       |       -        |       -        |       -        |       R       |        C        |       U R       |        D        |       -       |        -        |
+| ENT_ToChuc        |       C        |      R U       |      -       |       -        |       -        |       -        |       R       |        C        |       U R       |        D        |       -       |        -        |
+| ENT_LichSuCapNhat |       C        |       C        |      -       |       -        |       -        |       -        |       -       |        -        |        -        |        -        |       -       |        -        |
+| ENT_TaiLieu       |       C        |      R U       |      -       |       -        |       -        |       -        |       -       |        -        |        -        |        -        |       -       |        -        |
+end note
+@enduml

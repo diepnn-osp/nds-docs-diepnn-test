@@ -1,0 +1,676 @@
+@startuml ldm
+!pragma layout smetana
+left to right direction
+
+entity HoSoCongChung
+entity YeuCauMoHoSo
+entity YeuCauChuyenQuyenSoHuuHoSo
+entity YeuCauKhoiPhucDuLieu
+entity YeuCauTraCuuVanBanCongChung
+entity TaiSan
+entity CaNhan
+entity ToChuc
+entity ThongTinNganChan
+entity ThongTinGiaiToa
+entity CongChungVien
+entity ChungChiHanhNghe
+entity LichSuHanhNghe
+entity ChuKySo
+entity ToChucCongChung
+entity DonVi
+entity NguoiDung
+entity VaiTro
+entity QuyenChucNang
+entity ThongBao
+entity HuongDanSuDung
+entity CauHoi
+entity File
+entity LichSuCapNhatThongTinNganChan
+entity TaiSanNCGT
+entity CaNhanNCGT
+entity ToChucNCGT
+
+entity HoSoCongChung {
+    *Id: uuid <<PK>> - ID bản ghi
+    NgayCongChung: date - Thời gian công chứng
+    SoCongChung: string - Số công chứng
+    LoaiGiaoDichId: uuid <<FK>> - ID bản ghi loại giao dịch
+    TenGiaoDichId: uuid <<FK>> - ID bản ghi tên giao dịch
+    NoiDungGiaoDich: string - Nội dung giao dịch
+    GiaTri: numeric - Giá trị giao dịch
+    ThongTinBenLienQuan: object - thông tin bên liên quan cá nhân/tổ chức
+    TaiSan: object - thông tin tài sản
+    CongChungVienId: uuid <<FK>> - ID công chứng viên
+    ToChucCongChungId: uuid <<FK>> - ID tổ chức công chứng
+    DiaDiemCongChung: string - địa điểm công chứng
+    PhiCongChung: numeric - Phí công chứng
+    ThuLaoCongChung: numeric - Thù lao công chứng
+    FileVanBanCongChungDienTuId: uuid <<FK>> - ID file
+    FileHoSoLuuTruDienTuId: uuid <<FK>> - ID file
+    GiaoDichCongChungLienQuanId: uuid <<FK>> - ID giao dịch công chứng khác 
+    GhiChu: string - Ghi chú
+    TrangThai: string - Trạng thái hồ sơ Lưu nháp, Lưu chính thức
+    FileThanhPhanHoSoKhac: object - thông tin các thành phần khác của file
+    ToChucCongChungLuuTruId: uuid <<FK>> - ID tổ chức công chứng lưu trữ hồ sơ
+}
+entity HoSoCongChungGiay {
+    PhuongThucCongChung: string - Công chứng giấy
+    FileVanBanCongChungDienTuId: uuid <<FK>> - ID file
+    FileHoSoLuuTruDienTuId: uuid <<FK>> - ID file
+    NguoiChuyenDoiId: uuid <<FK>> - ID công chứng viên thực hiện 
+        chuyển đổi văn bản công chứng giấy sang điện tử
+    ThoiGianChuyenDoi: datetime - thời gian chuyển đổi
+        văn bản công chứng giấy sang điện tử
+}
+
+entity HoSoCongChungDienTu {
+    PhuongThucCongChung: string - Công chứng điện tử trực tiếp, Công chứng điện tử trực tuyến
+    FileVanBanCongChungDienTuId: uuid <<FK>> - ID file
+}
+
+entity HoSoCongChung_TheChap
+{
+    ThoiHanGiaiChap: string - Thời hạn giải chấp giao dịch thế chấp
+    NgayGiaiChap: date - Ngày giải chấp giao dịch thế chấp
+    TrangThaiGiaiChap: string - Chưa giải chấp, Giải chấp một phần, Đã giải chấp
+    GhiChuGiaiChap: string - Ghi chú giải chấp
+}
+
+entity HoSoCongChung_UyQuyen
+{
+    ThoiHan: string - thời hạn của giao dịch là thuê mượn,
+    cầm cố, bảo lãnh, ủy quyền, vay
+}
+entity HoSoCongChung_lienQuan
+{
+    *Id: uuid <<PK>> - ID bản ghi
+    HoSoCongChungChinhId: uuid <<FK>> - ID giao dịch công chứng chính
+    HoSoCongChungLienQuanId: uuid <<FK>> - ID giao dịch công chứng liên quan
+    LoaiQuanHe: string - Quan hệ giữa 2 giao dịch công chứng Hủy, Phụ lục
+}
+
+entity TaiSan
+{
+    *Id: uuid <<PK>> - ID bản ghi
+    ChuSoHuu: string - Thông tin chủ sở hữu tài sản
+    SoGiayTo: string - Số giấy chứng nhận quyền sở hữu tài sản
+    NgayCap: date - Ngày cấp giấy chứng nhận quyền sở hữu tài sản
+    NoiCap: string - Nơi cấp giấy chứng nhận quyền sở hữu tài sản
+    ThongTinKhac: string - Thông tin khác
+    LoaiTaiSan: string - Loại tài sản, lấy từ danh mục loại tài sản
+}
+
+entity OtoXeMay {
+    BienKiemSoat: string - Biển kiểm soát
+    SoKhung: string - Số khung
+    SoMay: string - Số máy
+    NhanHieu: string - Nhãn hiệu xe
+    SoLoai: string - Số loại xe
+    LoaiXe: string - Loại xe
+    MauSon: string - Màu sơn
+    NamSanXuat: int - Năm sản xuất
+    DungTich: string - Dung tích
+    TrongTai: string - Trọng tải (nếu có)
+    SoChoNgoi: int - Số chỗ ngồi (nếu có)
+}
+
+entity BDS_Dat{
+    SoVaoSoGCN: string - Số vào sổ cấp giấy chứng nhận
+    ThuaDatSo: string - Thửa đất số
+    ToBanDoSo: string - Tờ bản đồ số
+    DienTich: string - Diện tích
+    MucDich: string - Loại đất, mục đích sử dụng
+    ThoiHan: string - Thời hạn sử dụng
+    HinhThuc: string - Hình thức sử dụng Sử dụng chung, Sử dụng riêng
+    DiaChi: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+}
+entity BDS_DatVaTaiSanGanLienVoiDat{
+    SoVaoSoGCN: string - Số vào sổ cấp giấy chứng nhận
+    ThuaDatSo: string - Thửa đất số
+    ToBanDoSo: string - Tờ bản đồ số
+    DienTich: string - Diện tích của đất
+    MucDich: string - Loại đất, mục đích sử dụng
+    ThoiHan: string - Thời hạn sử dụng
+    HinhThuc: string - Hình thức sử dụng Sử dụng chung, Sử dụng riêng
+    DiaChi: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+    LoaiTaiSan: string - Loại tài sản gắn liền với đất
+    Nhà xưởng sản xuất, Đất (dùng cho mục đích sản xuất, kinh doanh tại khu công nghiệp),
+    Nhà ở thương mại, Nhà ở xã hội, Nhà ở công nhân tại khu công nghiệp - khu chế xuất,
+    Biệt thự nghỉ dưỡng, Căn hộ du lịch, Văn phòng, Văn phòng kết hợp lưu trú,
+    Trung tâm thương mại
+    DienTichTaiSan: string - Diện tích của tài sản gắn liền với đất
+    ThoiHanSoHuu: string - Thời hạn sở hữu
+    TenTaiSan: string - Tên tài sản gắn liền với đất
+    HinhThucSoHuu: string - Hình thức sở hữu tài sản
+}
+entity BDS_HopDongMuaBanBDS{
+    SoHopDong: string - Số hợp đồng
+    TenHopDong: string - Tên hợp đồng
+    NgayHopDong: date - Ngày hợp đồng
+    BenBan: string - Thông tin bên bán
+    BenMua: string - Thông tin bên mua
+    TenTaiSan: string - Tên tài sản
+    ThoiHanSoHuu: string - Thời hạn sở hữu
+    HinhThucSoHuu: string - Hình thức sở hữu tài sản
+    DienTich: string - Diện tích
+    DiaChi: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+}
+entity BDS_Khac{
+    SoVaoSoGCN: string - Số vào sổ cấp giấy chứng nhận
+    ThuaDatSo: string - Thửa đất số
+    ToBanDoSo: string - Tờ bản đồ số
+    DienTich: string - Diện tích
+    MucDich: string - Loại đất, mục đích sử dụng
+    ThoiHan: string - Thời hạn sử dụng
+    HinhThuc: string - Hình thức sử dụng Sử dụng chung, Sử dụng riêng
+    DiaChi: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+}
+entity TauBien{
+    TenTau: string - Tên tàu
+    HoHieu: string - Hô hiệu
+    LoaiTau: string - Loại tàu
+    NamDongTau: int - Năm đóng tàu
+    NoiDongTau: string - Nơi đóng tàu
+    ChieuDaiLonNhat: numeric - Chiều dài lớn nhất (m)
+    ChieuRong: numeric - Chiều rộng (m)
+    ChieuCaoManTau: numeric - Chiều cao mạn tàu (m)
+    MucNuocToiDa: numeric - Mức nước tối đa (m)
+    DungTichToanPhan: numeric - Dung tích toàn phần (GT)
+    DungTichThucDung: numeric - Dung tích thực dụng (NT)
+    TrongTaiToanPhan: numeric - Trọng tải toàn phần (DWT)
+    CongSuatMayChinh: string - Công suất máy chính (HP/KW)
+    CangDangKy: string - Cảng đăng ký
+    NgayDangKy: date - Ngày đăng ký
+    CoQuanDangKiem: string - Cơ quan đăng kiểm
+    SoDangKy: string - Số đăng ký
+}
+entity TauKeoGheThuyen{
+    TenPhuongTien: string - Tên phương tiện
+    HoHieu: string - Hô hiệu
+    LoaiPhuongTien: string - Loại phương tiện
+    CapPhuongTien: string - Cấp phương tiện
+    CongDung: string - Công dụng
+    NamDong: int - Năm đóng
+    NoiDong: string - Nơi đóng
+    ChieuDaiThietKe: numeric - Chiều dài thiết kế (m)
+    ChieuDaiLonNhat: numeric - Chiều dài lớn nhất (m)
+    ChieuRongThietKe: numeric - Chiều rộng thiết kế (m)
+    ChieuRongLonNhat: numeric - Chiều rộng lớn nhất (m)
+    ChieuCaoMan: numeric - Chiều cao mạn (m)
+    ChieuChim: numeric - Chiều chìm (m)
+    ManKho: numeric - Mạn khô (m)
+    VatLieuVo: string - Vật liệu vỏ
+    MayChinh: string - Máy chính (Số lượng, kiểu và công suất)
+    TrongTaiToanPhan: string - Trọng tải toàn phần, số lượng người được phép chở, sức kéo, đấy
+}
+entity TauCa{
+    TenTau: string - Tên tàu
+    SoDangKy: string - Số đăng ký
+    LoaiTau: string - Loại tàu
+    CongDung: string - Công dụng (nghề)
+    NamDongTau: int - Năm đóng tàu
+    NoiDongTau: string - Nơi đóng tàu
+    ChieuDaiThietKe: numeric - Chiều dài thiết kế(m)
+    ChieuDaiLonNhat: numeric - Chiều dài lớn nhất (m)
+    ChieuRongThietKe: numeric - Chiều rộng thiết kế (m)
+    ChieuRongLonNhat: numeric - Chiều rộng lớn nhất Bmax (m)
+    ChieuCaoMan: numeric - Chiều cao mạn D (m)
+    ChieuChim: numeric - Chiều chìm d (m)
+    ManKho: numeric - Mạn khô f (m)
+    TongDungTich: numeric - Tổng dung tích
+    VatLieuVo: string - Vật liệu vỏ
+    SucChoToiDa: numeric - Sức chở tối đa (tấn)
+    TocDoTuDo: numeric - Tốc độ tự do (hải lý/h)
+    CangDangKy: string - Cảng đăng ký
+    CoQuanDangKiem: string - Cơ quan đăng kiểm
+}
+entity TauBay{
+    SoHieuDangKy: string - Số hiệu đăng ký
+    LoaiTauBay: string - Loại tàu bay
+    KieuLoaiTauBay: string - Kiểu loại tàu bay
+    NhaSanXuat: string - Nhà sản xuất
+    QuocGiaSanXuat: string - Quốc gia sản xuất
+    NamXuatXuong: int - Năm xuất xưởng
+    SoXuatXuong: string - Số xuất xưởng
+    KieuLoaiDongCo: string - Kiểu loại động cơ
+}
+entity SoTietKiem{
+    TenTaiSan: string - Tên tài sản
+    SoDuTienGui: numeric - Số dư tiền gửi
+    KyHan: string - Kỳ hạn
+    LoaiTien: string - Loại tiền VND, USD, EUR
+}
+entity CoPhieu{
+    MaSoCoPhieu: string - Mã số cổ phiếu
+    SoLuong: int - Số lượng
+    LoaiCoPhieu: string - Loại cổ phiếu
+    MenhGia: numeric - Mệnh giá/ cổ phiếu (VNĐ)
+    TongMenhGia: numeric - Tổng mệnh giá
+    TinhThanh: int - Địa chỉ tỉnh/thành công ty phát hành CP
+    PhuongXa: int - Địa chỉ phường/xã công ty phát hành CP
+    DiaChi: string - Địa chỉ đường, số nhà công ty phát hành CP
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+}
+entity TraiPhieu{
+    TenTraiPhieu: string - Tên trái phiếu
+    SoLuong: numeric - Số lượng
+    MenhGia: numeric - Mệnh giá/ trái phiếu
+    TongMenhGia: numeric - Tổng mệnh giá
+    KyHan: string - Kỳ hạn
+    LoaiTraiPhieu: string - Loại trái phiếu
+}
+entity TaiSanKhac{
+    TenTaiSan: string - Tên tài sản
+    ThongTinTaiSan: string - Thông tin tài sản
+}
+
+
+
+entity CaNhan
+{
+    *Id: uuid <<PK>> - ID cá nhân
+    HoTen: string - Họ tên cá nhân
+    NgaySinh: date - Ngày sinh
+    SoGiayToNhanThan: string - Số CMND/CCCD/Hộ chiếu
+    NgayCap: date - Ngày cấp
+    NoiCap: string - Nơi cấp
+    DiaChi: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+    DienThoai: string - Số điện thoại
+    GioiTinh: int - Nam là 1, Nữ là 2
+    Email: string - Email
+    QuocTich: string - Quốc tịch
+    ThongTinKhac: string - thông tin khác
+}
+entity ToChuc
+{
+    *Id: uuid <<PK>> - ID tổ chức
+    TenToChuc: string - Tên tổ chức
+    LoaiGiayToPhapNhan: string - Thông tin loại giấy tờ pháp nhân
+    Giấy chứng nhận đăng ký hoạt động chi nhánh/phòng giao dịch,
+    Giấy chứng nhận đăng ký doanh nghiệp,
+    Giấy chứng nhận đăng ký kinh doanh
+    SoGiayToPhapNhan: string - Số giấy tờ pháp nhân
+    NgayCap: date - Ngày cấp
+    NoiCap: string - Nơi cấp
+    DienThoaiToChuc: string - Số điện thoại của tổ chức
+    DiaChiToChuc: string - Địa chỉ đường, số nhà của tổ chức từ 1/7
+    TinhThanhPhoToChuc: int - Mã tỉnh thành phố của tổ chức từ 1/7
+    PhuongXaToChuc: int - Mã phường xã của tổ chức từ 1/7
+    DiaChiCuToChuc: string - Địa chỉ đường, số nhà của tổ chức trước 1/7
+    TinhThanhPhoCuToChuc: int - Mã tỉnh thành phố của tổ chức trước 1/7
+    QuanHuyenCuToChuc: int - Mã quận huyện trước 1/7
+    PhuongXaCuToChuc: int - Mã phường xã cũ của tổ chức trước 1/7
+    NguoiDaiDien: string - Người đại diện
+    ChucVuNguoiDaiDien: string - Chức vụ người đại diện
+    NgaySinh: date - Ngày sinh người đại diện
+    LoaiGiayToNhanThan: string - Loại giấy tờ nhân thân
+    Căn cước, Căn cước công dân, CMND, Hộ chiếu
+    SoGiayToNhanThan: string - Số CMND/CCCD/Hộ chiếu
+    NgayCap: date - Ngày cấp
+    NoiCap: string - Nơi cấp
+    DiaChiNguoiDaiDien: string - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPhoNguoiDaiDien: int - Mã tỉnh thành phố từ 1/7
+    PhuongXaNguoiDaiDien: int - Mã phường xã từ 1/7
+    DiaChiCuNguoiDaiDien: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCuNguoiDaiDien: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCuNguoiDaiDien: int - Mã quận huyện trước 1/7
+    PhuongXaCuNguoiDaiDien: int - Mã phường xã cũ trước 1/7
+    GioiTinh: int - Nam là 1, Nữ là 2
+    QuocTich: string - Quốc tịch
+    ThongTinKhac: string - thông tin khác
+}
+
+entity File
+{
+    *Id: uuid <<PK>> - ID bản ghi file
+    TenFile: string - Tên file
+    MoTa: string - Mô tả file
+    DuongDan: string - Đường dẫn lưu trữ file
+    KichThuoc: numeric - Kích thước file (bytes)
+    DinhDang: string - Định dạng file (pdf, doc, jpg, etc.)
+    LoaiFile: string - Loại file (Văn bản công chứng, Hồ sơ lưu trữ, Hồ sơ khác, Giấy tờ pháp lý, etc.)
+}
+
+entity ThongTinNganChan{
+    *Id: uuid <<PK>> - ID bản ghi
+    LoaiThongTin: string - Loại thông tin 
+    Thông tin ngăn chặn; Cảnh báo rủi ro
+    FileThongTinNganChanId: uuid <<FK>> - ID file
+    DonViGuiYeuCauId: uuid <<FK>> - ID đơn vị gửi yêu cầu ngăn chặn
+    SoVanBan: string - Số văn bản ban hành
+    NgayBanHanh: date - Ngày ban hành văn bản
+    SoVanBanDen: string - Số văn bản đến
+    NgayVanBanDen: date - Ngày văn bản đến
+    TrichYeu: string - Trích yếu văn bản
+    GhiChu: string - Ghi chú
+    TaiSan: object - Thông tin tài sản
+    CaNhan: object - Thông tin cá nhân
+    ToChuc: object - Thông tin tổ chức
+    TrangThai: string - Danh sách trạng thái Lưu nháp, Chờ tiếp nhận, Đang xử lý, Đã tiếp nhận, Chờ duyệt, Đã duyệt, Từ chối
+}
+
+entity ThongTinGiaiToa{
+    *Id: uuid <<PK>> - ID bản ghi
+    DonViGuiYeuCauId: uuid <<FK>> - ID đơn vị gửi yêu cầu giải tỏa
+    SoVanBan: string - Số văn bản ban hành
+    NgayBanHanh: date - Ngày ban hành văn bản
+    SoVanBanDen: string - Số văn bản đến
+    NgayNhan: date - Ngày nhận văn bản giải tỏa
+    NgayNhap: date - Ngày nhập văn bản giải tỏa
+    TrichYeu: string - Trích yếu văn bản
+    GhiChu: string - Ghi chú
+    FileThongTinNganChanId: uuid <<FK>> - ID file
+    TaiSan: object - Thông tin tài sản
+    CaNhan: object - Thông tin cá nhân
+    ToChuc: object - Thông tin tổ chức
+    TrangThai: string - Danh sách trạng thái Lưu nháp, Chờ tiếp nhận, Đang xử lý, Đã tiếp nhận, Chờ duyệt, Đã duyệt, Từ chối
+}
+
+Entity LichSuCapNhatThongTinNganChan{
+    *LichSuId: uuid <<PK>> - ID bản ghi lịch sử
+    NganChanId: uuid <<FK>> - ID thông tin ngăn chặn tương ứng
+    HanhDong: string - Loại hành động (Tạo mới/Cập nhật/Xóa/Chuyển STP/Tiếp nhận/Từ chối tiếp nhận/Trình duyệt/Duyệt/Từ chối duyệt/Đăng tải/Phân công xử lý)
+    TruongThayDoi: string - Tên trường dữ liệu thay đổi
+    GiaTriCu: string - Giá trị cũ trước khi thay đổi
+    GiaTriMoi: string - Giá trị mới sau khi thay đổi
+    NguoiDungId: uuid <<FK>> - ID người dùng (thực hiện thay đổi)
+    ThoiGianThucHien: datetime - Thời điểm thực hiện thay đổi
+}
+
+entity TaiSanNCGT{
+    *taiSanNCGTId: uuid <<PK>> - ID bản ghi
+    TaiSanId: uuid <<FK>> - ID tài sản
+    NganChanId: uuid <<FK>> - ID thông tin ngăn chặn
+    TrangThai: string - Trạng thái (Ngăn chặn, Đã giải tỏa)
+}
+entity CaNhanNCGT{
+    *CaNhanNCGTId: uuid <<PK>> - ID bản ghi
+    CaNhanId: uuid <<FK>> - ID cá nhân
+    NganChanId: uuid <<FK>> - ID thông tin ngăn chặn
+    TrangThai: string - Trạng thái (Ngăn chặn, Đã giải tỏa)
+}
+entity ToChucNCGT{
+    *ToChucNCGTId: uuid <<PK>> - ID bản ghi
+    ToChucId: uuid <<FK>> - ID tổ chức
+    NganChanId: uuid <<FK>> - ID thông tin ngăn chặn
+    TrangThai: string - Trạng thái (Ngăn chặn, Đã giải tỏa)
+}
+
+entity YeuCauMoHoSo{
+    *Id: uuid <<PK>> - ID bản ghi
+    NguoiYeuCauId: uuid <<FK>> - ID người dùng gửi yêu cầu mở hồ sơ
+    EmailNhanHoSo: string - Email người nhận kết quả mở hồ sơ
+    HoSoCongChungId: uuid <<FK>> - ID giao dịch công chứng
+    NgayYeuCau: date - Thời gian yêu cầu mở giao dịch công chứng
+    NguoiDuyetId: uuid <<FK>> - ID người dùng phê duyệt yêu cầu mở hồ sơ
+    TrangThai: string - Trạng thái Chờ duyệt, Duyệt, Từ chối
+}
+entity YeuCauChuyenQuyenSoHuuHoSo{
+    *Id: uuid <<PK>> - ID bản ghi
+    NguoiYeuCauId: uuid <<FK>> - ID người dùng yêu cầu chuyển quyền sở hữu
+    ToChucChuyenSoHuuId: uuid <<FK>> - ID tổ chức công chứng chuyển quyền sở hữu
+    ToChucNhanQuyenSoHuuId: uuid <<FK>> - ID tổ chức công chứng nhận quyền sở hữu
+    NgayYeuCau: date - Thời gian yêu cầu mở giao dịch công chứng
+    HoSoCongChung: object - Thông tin giao dịch công chứng
+    NguoiDuyetId: uuid <<FK>> - ID người dùng phê duyệt yêu cầu chuyển quyền sở hữu hồ sơ
+    TrangThai: string - Trạng thái Chờ duyệt, Duyệt, Từ chối
+}
+entity YeuCauKhoiPhucDuLieu{
+    *Id: uuid <<PK>> - ID bản ghi
+    NguoiYeuCauId: uuid <<FK>> - ID người dùng yêu cầu khôi phục dữ liệu
+    ToChucCongChungId: uuid <<FK>> - ID tổ chức công chứng yêu cầu khôi phục dữ liệu
+    NgayYeuCau: date - Thời gian yêu cầu mở giao dịch công chứng
+    ThoiGianTu: date - Thời gian khôi phục dữ liệu từ
+    ThoiGianDen: date - Thời gian khôi phục dữ liệu đến
+    NguoiDuyetId: uuid <<FK>> - ID người dùng phê duyệt yêu cầu khôi phục dữ liệu
+    HoSoCongChung: object - Thông tin giao dịch công chứng
+    TrangThai: string - Trạng thái Chờ duyệt, Duyệt, Từ chối
+}
+entity YeuCauTraCuuVanBanCongChung {
+    *Id: uuid <<PK>> - ID bản ghi
+    HoTenNguoiYeuCau: string - Họ tên người yêu cầu tra cứu văn bản công chứng
+    EmailNguoiYeuCau: string - Email người yêu cầu tra cứu (để gửi kết quả)
+    SoDienThoai: string - Số điện thoại người tra cứu
+    HoSoCongChungId: uuid <<FK>> - ID văn bản công chứng cần tra cứu
+    ToChucCongChungId: uuid <<FK>> - ID tổ chức hành nghề công chứng
+    ThoiGianChoPhepTraCuuTu: datetime - Thời gian cho phép tra cứu từ
+    ThoiGianChoPhepTraCuuDen: datetime - Thời gian cho phép tra cứu đến
+    NguoiYeuCauId: uuid <<FK>> - ID người dùng tạo yêu cầu
+    NguoiDuyetId: uuid <<FK>> - ID người dùng phê duyệt yêu cầu
+    ThoiGianDuyet: datetime - Thời gian phê duyệt/từ chối yêu cầu
+    LyDoTuChoi: string - Lý do từ chối (nếu có)
+    TrangThai: string - Trạng thái yêu cầu (Chờ duyệt, Đã duyệt, Đã từ chối, Chờ xác nhận TCHNCC, Đã xác nhận, Đã gửi kết quả, Hết hạn)
+    LinkTraCuu: string - Link tra cứu gửi qua email
+    ThoiGianHetHan: datetime - Thời gian hết hạn tra cứu
+    ThoiGianGuiKetQua: datetime - Thời gian gửi kết quả tra cứu
+    GhiChu: string - Ghi chú
+}
+' Quản lý đơn vị
+entity DonVi
+{
+    *Id: uuid <<PK>> - ID bản ghi
+    LoaiDonVi: string - Thông tin loại đơn vị 
+    Bộ Tư Pháp, Sở Tư pháp, 
+    Tổ chức hành nghề công chứng, Đơn vị gửi thông tin ngăn chặn
+    DonViChaId: uuid <<FK>> - ID bản ghi đơn vị
+    TenDonVi: string - Tên đơn vị
+    DienThoai: string - Số điện thoại 
+    Email: string - Thông tin email
+    Fax: string - Thông tin số fax
+    WebSite: string - Thông tin website
+    TinhThanh: string - Địa chỉ tỉnh/thành phố của đơn vị
+    PhuongXa: string - Địa chỉ phường/xã phố của đơn vị
+    DiaChi: string - Địa chỉ số nhà, tổ, thông, xóm của đơn vị
+    ThongTinKhac: string - Thông tin khác
+    TrangThai: string - Trạng thái Hoạt động, Ngừng hoạt động
+}
+' Quản lý tổ chức hành nghề công chứng
+entity ToChucCongChung {
+    *Id: uuid <<PK>> - ID bản ghi
+    MaSoThue: string - Mã số thuế
+    TrangThai: string - Trạng thái hoạt động của tổ chức Đang hoạt động, Chờ thành lập, 
+        Giải thể, Chấm dứt hoạt động, Chưa hoạt động, Thu hồi QĐ cho phép thành lập, 
+        Chờ cấp Giấy ĐKHĐ, Từ chối cấp Giấy ĐKHĐ, Đã hợp nhất, Đã thành lập, 
+        Từ chối thành lập, Tạm ngưng hoạt động, 
+        Thu hồi Giấy ĐKHĐ, Thay đổi nội dung ĐKHĐ, Đã chuyển đổi, Đã sáp nhập
+}
+
+' Quản lý người dùng và vai trò
+entity NguoiDung
+{
+    *Id: uuid <<PK>> - ID bản ghi
+    VaiTro: object - Thông tin vai trò của người dùng
+    AnhDaiDien: string - Ảnh người dùng
+    DonViId: uuid <<FK>> - ID đơn vị
+    HoVaTen: string - Họ và tên
+    NgaySinh: date - Ngày sinh
+    QuocTich: string - Quốc tịch
+    DanToc: string - Dân tộc
+    DienThoaiCoDinh: string - Số điện thoại cố định
+    DienThoaiDiDong: string - Số điện thoại di động
+    GioiTinh: int - Nam là 1, Nữ là 2
+    Email: string - Email
+    ChucVuId: uuid <<FK>> - ID chức vụ
+    DiaChi: string - Địa chỉ - Địa chỉ đường, số nhà từ 1/7
+    TinhThanhPho: int - Mã tỉnh thành phố từ 1/7
+    PhuongXa: int - Mã phường xã từ 1/7
+    DiaChiCu: string - Địa chỉ đường, số nhà trước 1/7
+    TinhThanhPhoCu: int - Mã tỉnh thành phố trước 1/7
+    QuanHuyenCu: int - Mã quận huyện trước 1/7
+    PhuongXaCu: int - Mã phường xã cũ trước 1/7
+    TrangThai: string - Trạng thái Hoạt động, Ngừng hoạt động
+    Username: string - Thông tin tài khoản đăng nhập hệ thống
+    MatKhau: string - Thông tin mật khẩu của đăng nhập hệ thống
+}
+
+entity CongChungVien {
+    *Id: uuid <<PK>> - Id công chứng viên
+    SoGiayTo: string - Số CMND/Căn cước/CCCD 
+    NgayCap: date - Ngày cấp
+    NoiCap: string - Nơi cấp
+    TrangThai: string -  Danh sách trạng thái là Đăng ký tập sự, Đang tập sự, 
+        Tạm ngừng tập sự, Chấm dứt tập sự, Hoàn thành tập sự, 
+        Chờ tiếp nhận bổ nhiệm, Chờ bổ nhiệm, Đã bổ nhiệm, 
+        Đang hành nghề, Tạm đình chỉ hành nghề, Đã bổ nhiệm lại, 
+        Đã miễn nhiệm, Chờ bổ sung, Đã bổ sung, Từ chối bổ nhiệm, 
+        Đã thay đổi nơi tập sự, Chờ tiếp nhận miễn nhiệm, 
+        Chờ tiếp nhận bổ nhiệm lại, Từ chối miễn nhiệm, Chờ bổ nhiệm lại, 
+        Từ chối bổ nhiệm lại, Chờ miễn nhiệm, Thu hồi thẻ, Chờ cấp thẻ, 
+        Từ chối cấp thẻ, Đạt kết quả tập sự
+    SoThe: string - Số thẻ công chứng viên
+    LaTruongVanPhong: boolean - Là trưởng văn phòng
+}
+
+entity ChungChiHanhNghe {
+    *Id: uuid <<PK>> - ID bản ghi
+    CongChungVienId: uuid <<FK>> - ID công chứng viên
+    SoChungChi: string - Số chứng chỉ
+    NgayCap: date - Ngày cấp
+    NgayHieuLuc: date - Ngày hiệu lực
+    NgayHetHan: date - Ngày hết hạn
+    DonViCap: string - Đơn vị cấp
+    TrangThai: string - Có hiệu lực, Hết hiệu lực
+    FileDinhKem: uuid <<FK>> - ID file
+}
+
+entity LichSuHanhNghe {
+    *Id: uuid <<PK>> - Id bản ghi
+    CongChungVienId: uuid <<FK>> - Id công chứng viên
+    ToChucCongChungId: uuid <<FK>> - ID tổ chức công chứng
+    NgayBatDau: date - Ngày bắt đầu hành nghề
+    NgayKetThuc: date - Ngày kết thúc hành nghề
+    TrangThai: string - Đang hành nghề, Đã kết thúc
+    GhiChu: string - Ghi chú
+    SoQuyetDinh: string - Số quyết định bổ nhiệm
+    NgayQuyetDinh: date - Ngày quyết định bổ nhiệm
+    NgayHieuLuc: date - Ngày hiệu lực
+    FileDinhKemId: uuid <<FK>> - ID file
+    SoThe: string - Số thẻ công chứng viên
+}
+
+entity ChuKySo {
+    *Id: uuid <<PK>> - Id thông tin đăng ký chữ ký số, tự động tăng
+    CongChungVienId: uuid <<FK>> - Id công chứng viên
+    ToChucCongChungId: uuid <<FK>> - ID tổ chức công chứng
+    SoSerial: string - Số serial
+    LoaiChuKySo: string - Loại chữ ký số cá nhân/tổ chức
+    NgayHieuLuc: date - Ngày hiệu lực
+    NgayKetThuc: date - Ngày hết hạn
+    NhaCungCap: string - Tên nhà cung cấp
+    TrangThai: string - Mới tạo, Chờ duyệt, Đã duyệt, Từ chối
+    ThoiGianGui: datetime - Thời gian gửi thông tin
+    NguoiGui: string - Người gửi thông tin
+    ThoiGianDuyet: datetime - Thời gian duyệt
+    NguoiDuyet: string - Người duyệt
+    FileDinhKemId: uuid <<FK>> - ID file
+    GhiChu: string - Ghi chú
+}
+entity VaiTro
+{
+    Id: uuid <<PK>> - ID bản ghi
+    TenVaiTro: string - Tên vai trò
+    MoTa: string - Thông tin mô tả
+    NgayTao: datetime - Ngày tạo bản ghi
+    NguoiTao: uuid <<FK>> - ID người dùng thêm mới bản ghi
+    NgayCapNhat: datetime - Ngày cập nhật bản ghi
+    NguoiCapNhat: uuid <<FK>> - ID người dùng cập nhật bản ghi
+    QuyenChucNangId: object - Thông tin quyền chức năng
+}
+entity QuyenChucNang
+{
+    QuyenChucNangId: uuid <<PK>> - ID bản ghi
+    TenQuyen: string - Tên quyền chức năng
+}
+
+' Quản lý thông báo
+entity ThongBao
+{
+    Id: uuid <<PK>> - ID bản ghi
+    LoaiThongBao: string - Loại thông báo Thông báo nội bộ,
+    Thông báo gửi STP, Thông báo gửi TCHNCC
+    TieuDe: string - Tiêu đề thông báo
+    NoiDung: string - Nội dung thông báo
+    FileThongBaoId: uuid <<FK>> - ID File
+}
+
+' Quản lý hướng dẫn sử dụng
+entity HuongDanSuDung
+{
+    Id: uuid <<PK>> - ID bản ghi
+    TieuDe: string - Tiêu đề hướng dẫn sử dụng
+    NoiDung: string - Nội dung thông báo
+    FileHuongDanSuDungId: uuid <<FK>> - ID File
+}
+
+' Quản lý câu hỏi thường gặp
+entity CauHoi
+{
+    Id: uuid <<PK>> - ID bản ghi
+    CauHoi: string - Nội dung câu hỏi
+    GiaiDap: string - Nội dung câu trả lời
+}
+
+HoSoCongChung_lienQuan --|> HoSoCongChung
+HoSoCongChung_TheChap --|> HoSoCongChung
+HoSoCongChung_UyQuyen --|> HoSoCongChung
+HoSoCongChungGiay --|> HoSoCongChung
+HoSoCongChungDienTu --|> HoSoCongChung
+
+BDS_Dat --|> TaiSan
+BDS_DatVaTaiSanGanLienVoiDat --|> TaiSan
+BDS_HopDongMuaBanBDS --|> TaiSan
+BDS_Khac --|> TaiSan
+TauBien --|> TaiSan
+TauKeoGheThuyen --|> TaiSan
+TauCa --|> TaiSan
+TauBay --|> TaiSan
+SoTietKiem --|> TaiSan
+CoPhieu --|> TaiSan
+TraiPhieu --|> TaiSan
+TaiSanKhac --|> TaiSan
+
+HoSoCongChung_TheChap --|> HoSoCongChungGiay
+HoSoCongChung_TheChap --|> HoSoCongChungDienTu
+
+HoSoCongChungGiay --|> HoSoCongChung
+HoSoCongChungDienTu --|> HoSoCongChung
+
+CongChungVien --|> NguoiDung
+ToChucCongChung --|> DonVi
+
+
+
+@enduml

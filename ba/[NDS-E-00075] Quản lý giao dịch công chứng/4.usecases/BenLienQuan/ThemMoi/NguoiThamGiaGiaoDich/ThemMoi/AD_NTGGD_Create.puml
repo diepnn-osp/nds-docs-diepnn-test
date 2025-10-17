@@ -1,0 +1,39 @@
+@startuml AD_NTGGD_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới người tham gia giao dịch
+
+start
+:Người dùng đang thao tác trong form thêm mới/chỉnh sửa giao dịch công chứng\n(**SCR_GDCC_Update** / **SCR_GDCC_Create**);
+:Người dùng bấm "Thêm mới người tham gia giao dịch";
+:Hiển thị popup nhập thông tin người tham gia giao dịch;
+:Hiển thị ô lựa chọn Cá nhân/Tổ chức;
+:Người dùng chọn cá nhân/tổ chức;
+:Hiển thị form thêm mới cá nhân/tổ chức (**SCR_NTGGD_Create**);
+:Người dùng nhập thông tin chi tiết người tham gia giao dịch;
+:Chọn thao tác;
+switch (Thao tác?)
+case (Lưu)
+    :Kiểm tra tính hợp lệ dữ liệu và các thông tin bắt buộc;
+    if (Hợp lệ & đầy đủ?) then (Đúng)
+        if (Ghi thành công?) then (Có)
+            :Thông báo "Thêm mới người tham gia giao dịch thành công";
+            :Hiển thị kết quả trong danh sách người tham gia giao dịch của bên liên quan\n(**SCR_GDCC_Create / SCR_GDCC_Update**);    
+        else (Không)
+            :Thông báo lỗi hệ thống;
+            :Không đóng popup thêm mới người tham gia giao dịch\n(**SCR_NTGGD_Create**);
+        endif
+    else (Sai)
+        :Thông báo lỗi dữ liệu nhập không hợp lệ hoặc chưa điền đầy đủ thông tin bắt buộc;
+        :Không đóng popup thêm mới người tham gia giao dịch\n(**SCR_NTGGD_Create**);
+    endif
+case (Hủy)
+    :Xác nhận hủy thao tác?;
+    if (Đồng ý?) then (Có)
+        :Hủy thao tác thêm mới người tham gia giao dịch;
+        :Quay lại form giao dịch công chứng\n(**SCR_GDCC_Create / SCR_GDCC_Update**);
+    else (Không)
+        :Ở lại popup thêm mới người tham gia giao dịch\n(**SCR_NTGGD_Create**);
+    endif
+endswitch
+stop
+@enduml

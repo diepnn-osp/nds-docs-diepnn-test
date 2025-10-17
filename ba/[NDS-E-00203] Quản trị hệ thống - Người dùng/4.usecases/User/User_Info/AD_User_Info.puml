@@ -1,0 +1,23 @@
+@startuml AD_User_Info
+!pragma layout smetana
+title Activity Diagram: Xem thông tin tài khoản người dùng;
+start
+:Người dùng đăng nhập hệ thống;
+:Người dùng truy cập chức năng "Thông tin tài khoản" từ menu;
+if (Tải thông tin thành công?) then (Có)
+  :Hiển thị trang thông tin tài khoản (**SCR_User_Info**);
+  :Người dùng xem thông tin tài khoản;
+  switch (Người dùng chọn thao tác?)
+  case (Cập nhật thông tin)
+    :Chuyển đến màn hình cập nhật thông tin (**SCR_User_UpdateInfo**);
+  case (Đổi mật khẩu)
+    :Chuyển đến màn hình đổi mật khẩu (**SCR_User_ChangePass**);
+  case (Đóng)
+    :Đóng trang thông tin tài khoản;
+    :Quay về trang chủ;
+  endswitch
+else (Không)
+  :Hiển thị thông báo "Không tải được thông tin tài khoản, vui lòng thử lại";
+endif
+stop
+@enduml

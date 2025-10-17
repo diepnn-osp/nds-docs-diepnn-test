@@ -1,0 +1,33 @@
+@startuml AD_Noti_Delete
+!pragma layout smetana
+title Activity Diagram: Xóa thông báo
+
+start
+:Truy cập danh sách thông báo (UC_Noti_List);
+:Chọn Xóa trên dòng thông báo;
+:Hiển thị popup xác nhận Xác nhận xóa thông báo này? [Xác nhận | Hủy];
+if (Người dùng chọn hành động?) then (Xác nhận)
+    :Kiểm tra quyền xóa của người dùng;
+    if (Có quyền xóa?) then (Có)
+        :Kiểm tra trạng thái thông báo;
+        if (Trạng thái = Chưa gửi?) then (Chưa gửi)
+            :Hiển thị thông báo Xóa thành công;
+            :Thực hiện xóa thông báo;
+            :Ghi audit log (người xóa, thời gian, lý do);
+            :Cập nhật danh sách hiển thị (SCR_Noti_List);
+            stop
+        else (Đã gửi)
+            :Hiển thị thông báo Không thể xóa thông báo đã gửi;
+            stop
+        endif
+    else (Không có quyền)
+        :Hiển thị Không có quyền xóa thông báo;
+        stop
+    endif
+else (Hủy)
+    :Đóng popup;
+    stop
+endif
+
+@enduml
+

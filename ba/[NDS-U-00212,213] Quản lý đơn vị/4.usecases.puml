@@ -1,0 +1,51 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Quản trị hệ thống" as Admin
+actor "Chuyên viên Cục BTTP" as CVBTP
+actor "Chuyên viên STP" as CVSTP
+
+'==================== Quản lý danh mục đơn vị ====================
+package "Quản lý Danh mục đơn vị" as DM_Donvi{
+    usecase "Xem danh sách danh mục đơn vị" as UC_DM_Donvi_List
+    usecase "Thêm mới danh mục đơn vị" as UC_DM_Donvi_Create
+    usecase "Chỉnh sửa thông tin danh mục đơn vị" as UC_DM_Donvi_Update
+    usecase "Xóa danh mục đơn vị" as UC_DM_Donvi_Delete
+    usecase "Tìm kiếm thông tin danh mục đơn vị" as UC_DM_Donvi_Search
+    usecase "Tải về file mẫu danh mục đơn vị" as UC_DM_Donvi_Download_Temp
+    usecase "Import danh mục đơn vị" as UC_DM_Donvi_Import
+    usecase "Xuất danh sách danh mục đơn vị" as UC_DM_Donvi_Export
+}
+
+'==================== Liên kết Actor → UC ====================
+' Quản trị viên
+Admin -- UC_DM_Donvi_List
+Admin -- UC_DM_Donvi_Create
+Admin -- UC_DM_Donvi_Update
+Admin -- UC_DM_Donvi_Delete
+Admin -- UC_DM_Donvi_Search
+Admin -- UC_DM_Donvi_Download_Temp
+Admin -- UC_DM_Donvi_Import
+Admin -- UC_DM_Donvi_Export
+
+CVBTP -- UC_DM_Donvi_List
+CVBTP -- UC_DM_Donvi_Create
+CVBTP -- UC_DM_Donvi_Update
+CVBTP -- UC_DM_Donvi_Delete
+CVBTP -- UC_DM_Donvi_Search
+CVBTP -- UC_DM_Donvi_Download_Temp
+CVBTP -- UC_DM_Donvi_Import
+CVBTP -- UC_DM_Donvi_Export
+
+CVSTP -- UC_DM_Donvi_List
+CVSTP -- UC_DM_Donvi_Create
+CVSTP -- UC_DM_Donvi_Update
+CVSTP -- UC_DM_Donvi_Delete
+CVSTP -- UC_DM_Donvi_Search
+CVSTP -- UC_DM_Donvi_Download_Temp
+CVSTP -- UC_DM_Donvi_Import
+CVSTP -- UC_DM_Donvi_Export
+
+@enduml

@@ -1,0 +1,42 @@
+@startuml AD_DM_Donvi_List
+!pragma layout smetana
+title Activity Diagram: Xem danh sách danh mục đơn vị
+
+start
+
+:Người dùng mở menu chọn "Danh mục đơn vị";
+:Kiểm tra quyền truy cập theo vai trò (Quản trị viên, Chuyên viên cục BTTP, Chuyên viên phòng BTTP Sở Tư pháp, Công chứng viên tại các TCHNCC);
+if (Người dùng có quyền?) then (Có)
+  :Tải danh sách đơn vị;
+  if (Tải dữ liệu thành công?) then (Có)
+    if (Danh sách có dữ liệu?) then (Có)
+      :Sắp xếp theo thời gian cập nhật (mới → cũ);
+      if (Số lượng bản ghi > 10?) then (Có)
+        :Thực hiện phân trang (10 bản ghi/trang);
+      else (Không)
+        :Hiển thị toàn bộ danh sách;
+      endif
+      :Hiển thị danh sách với các trường: STT, Mã danh mục, Loại danh mục, Tên danh mục, Trạng thái danh mục;
+      note right
+        Tùy theo phân quyền, người dùng có thể thực hiện các thao tác:
+        - Xem chi tiết
+        - Sửa (nếu có quyền)
+        - Xóa (nếu có quyền)
+        - Xem lịch sử (nếu có quyền)
+        - Tải về file mẫu import
+        - Import dữ liệu đơn vị (nếu có quyền)
+        - Xuất danh sách đơn vị (nếu có quyền)
+      end note
+    else (Không)
+      :Hiển thị thông báo "Không có dữ liệu danh mục đơn vị";
+    endif
+  else (Không)
+    :Hiển thị thông báo "Không tải được danh sách, vui lòng thử lại";
+  endif
+else (Không)
+  :Hiển thị thông báo "Không có quyền truy cập";
+  :Ẩn menu "Quản lý danh mục đơn vị" khi người dùng đăng nhập;
+endif
+
+stop
+@enduml

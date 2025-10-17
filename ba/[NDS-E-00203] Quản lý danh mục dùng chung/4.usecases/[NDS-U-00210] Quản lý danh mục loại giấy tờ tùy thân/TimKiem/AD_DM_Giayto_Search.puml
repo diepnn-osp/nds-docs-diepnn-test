@@ -1,0 +1,28 @@
+@startuml DM_Giayto_Search
+!pragma layout smetana
+title Activity Diagram: Tìm kiếm danh mục giấy tờ
+
+start
+:Người dùng truy cập màn hình danh sách danh mục giấy tờ (**DM_Giayto_List**);
+:Người dùng điền thông tin tìm kiếm;
+note right: Tiêu chí tìm kiếm: Tên danh mục giấy tờ theo từ khóa tìm kiếm
+:Người dùng bấm nút "Tìm kiếm";
+:Hệ thống truy vấn thông tin danh mục giấy tờ;
+note right: Truy vấn theo: Tên danh mục giấy tờ
+if (Có lỗi tải dữ liệu?) then (Có)
+  :Hiển thị thông báo "Không tải được danh sách, vui lòng thử lại";
+else (Không)
+  if (Tìm thấy dữ liệu?) then (Có)
+    :Sắp xếp theo thời gian cập nhật (mới → cũ);
+    if (Số lượng bản ghi > 10?) then (Có)
+      :Thực hiện phân trang (10 bản ghi/trang);
+    else (Không)
+      :Hiển thị toàn bộ danh sách;
+    endif
+    :Hiển thị danh sách kết quả tìm kiếm;
+  else (Không)
+    :Hiển thị thông báo "Không tìm thấy dữ liệu danh mục giấy tờ theo từ khóa tìm kiếm";
+  endif
+endif
+stop
+@enduml

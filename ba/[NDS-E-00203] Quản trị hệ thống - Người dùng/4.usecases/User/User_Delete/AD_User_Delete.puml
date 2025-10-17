@@ -1,0 +1,30 @@
+@startuml AD_User_Delete
+!pragma layout smetana
+title Activity Diagram: Xóa tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng" (**SCR_User_List**);
+:Chọn tài khoản người dùng cần xóa;
+:Chọn thao tác "Xóa tài khoản";
+:Hiển thị popup xác nhận xóa tài khoản
+(**SCR_User_Delete**);
+note right
+  Popup xác nhận hiển thị:
+  - Thông báo xác nhận xóa
+  - Thông tin cơ bản của tài khoản
+  - Nút "Xác nhận"
+  - Nút "Hủy"
+end note
+:Người dùng chọn "Xác nhận";
+:Cập nhật trạng thái tài khoản về "Không sử dụng"
+(xóa mềm);
+if (Cập nhật trạng thái thành công?) then (Có)
+  :Thông báo "Xóa tài khoản thành công";
+  :Đóng popup xác nhận;
+  :Tải lại danh sách tài khoản người dùng
+  (**SCR_User_List**);
+else (Không)
+  :Thông báo "Xóa tài khoản thất bại";
+  :Đóng popup xác nhận;
+endif
+stop
+@enduml

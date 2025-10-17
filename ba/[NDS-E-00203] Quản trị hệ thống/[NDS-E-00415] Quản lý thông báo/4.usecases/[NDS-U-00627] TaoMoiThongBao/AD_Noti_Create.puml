@@ -1,0 +1,35 @@
+@startuml AD_Noti_Create
+!pragma layout smetana
+title Activity Diagram: Thêm mới thông báo
+start
+:Truy cập chức năng Quản lý thông báo (UC_Noti_List);
+:Chọn "Thêm mới thông báo";
+if (Kiểm tra phân quyền tài khoản?) then (yes)
+    :Hiển thị form tạo mới (SCR_Noti_Create);
+    :Nhập thông tin thông báo;
+    switch (Thao tác?)
+        case (Tạo)
+        :Kiểm tra tính hợp lệ dữ liệu;
+        if (Hợp lệ?) then (yes)
+            :Ghi nhận dữ liệu thông báo\n Trạng thái = Chưa gửi;
+        else (no)
+            :Hiển thị lỗi tương ứng;
+            :Ở lại màn hình (SCR_Noti_Create) để người dùng sửa lỗi;
+        endif
+        case (Tạo và gửi)
+        :Kiểm tra tính hợp lệ dữ liệu;
+        if (Hợp lệ?) then (yes)
+            :Ghi nhận dữ liệu thông báo\n Trạng thái = Đã gửi;
+        else (no)
+            :Hiển thị lỗi tương ứng;
+            :Ở lại màn hình (SCR_Noti_Create) để người dùng sửa lỗi;
+        endif
+        case (Hủy)
+        :Hủy thao tác tạo thông báo;
+        :Chuyển hướng về danh sách (UC_Noti_List);
+    endswitch
+else (no)
+    :Hiển thị "Không có quyền truy cập";
+endif 
+stop
+@enduml

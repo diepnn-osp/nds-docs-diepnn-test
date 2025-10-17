@@ -1,0 +1,64 @@
+@startuml AD_User_Identify
+!pragma layout smetana
+title Activity Diagram: Xác thực người dùng qua email;
+start
+:Người dùng đăng nhập vào hệ thống;
+if (Quản trị hệ thống đã bật cấu hình yêu cầu xác thực?) then (Có)
+  if (Người dùng đã xác thực email?) then (Đã xác thực)
+    :Cho phép truy cập hệ thống;
+    stop
+  else (Chưa xác thực)
+    :Hiển thị popup yêu cầu xác thực email;
+    note right
+      Popup hiển thị:
+      - Yêu cầu xác thực email
+      - Ô nhập email (nếu chưa có)
+      - Nút "Xác thực"
+    end note
+    if (Người dùng đã có email trong hệ thống?) then (Có)
+      :Tự động điền email vào ô nhập liệu;
+      :Người dùng có thể thay đổi email nếu cần;
+    else (Không)
+      :Hiển thị thông báo yêu cầu cập nhật email;
+      :Người dùng phải nhập email mới;
+    endif
+    :Người dùng nhập email (nếu cần);
+    :Người dùng nhấn nút "Xác thực";
+    if (Đã gửi OTP quá 3 lần trong 15 phút?) then (Có)
+      :Hiển thị thông báo "Đã quá giới hạn gửi OTP. Vui lòng thử lại sau.";
+    else (Không)
+      :Hệ thống gửi mã OTP (6 số) về email;
+      :Hiển thị popup nhập mã OTP;
+    endif
+    note right
+      Popup OTP hiển thị:
+      - Thông báo đã gửi mã OTP đến email
+      - 6 ô nhập mã OTP (mỗi ô 1 số)
+      - Nút "Xác nhận"
+      - Nút "Gửi lại" (đếm ngược 5 phút)
+    end note
+    :Người dùng nhập mã OTP;
+    :Người dùng nhấn nút "Xác nhận";
+    if (Mã OTP đúng và còn hiệu lực (trong 5 phút)?) then (Có)
+      :Cập nhật email của người dùng vào thông tin tài khoản;
+      :Đánh dấu tài khoản đã xác thực;
+      :Đóng popup xác thực;
+      :Hiển thị thông báo "Xác thực thành công";
+      :Cho phép truy cập hệ thống;
+    else (Không)
+      :Tăng số lần xác thực sai;
+      if (Số lần xác thực sai >= 5?) then (Có)
+        :Hiển thị thông báo "Bạn đã xác thực sai quá 5 lần. Vui lòng đăng nhập lại.";
+        :Đăng xuất tài khoản người dùng;
+        stop
+      else (Không)
+        :Hiển thị thông báo "Mã OTP không đúng hoặc đã hết hạn";
+        :Cho phép người dùng nhập lại mã hoặc gửi lại mã mới;
+      endif
+    endif
+  endif
+else (Không)
+  :Cho phép truy cập hệ thống;
+endif
+stop
+@enduml

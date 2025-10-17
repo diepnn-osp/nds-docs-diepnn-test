@@ -1,0 +1,40 @@
+@startuml AD_User_Update
+!pragma layout smetana
+title Activity Diagram: Cập nhật thông tin tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng" (**SCR_User_List**);
+:Chọn tài khoản người dùng cần cập nhật thông tin;
+:Tải thông tin chi tiết tài khoản người dùng;
+if (Tải dữ liệu thành công?) then (Có)
+  :Hiển thị form cập nhật thông tin tài khoản người dùng
+  (**SCR_User_Update**);
+  :Người dùng chỉnh sửa thông tin tài khoản;
+  note right
+    Các thông tin có thể chỉnh sửa:
+    - Họ và tên
+    - Email
+    - Vai trò
+    - Đơn vị
+    - Trạng thái
+    - Tên tài khoản (không được sửa)
+  end note
+  :Người dùng chọn thao tác "Lưu thông tin";
+  :Kiểm tra dữ liệu hợp lệ;
+  if (Dữ liệu hợp lệ?) then (Có)
+    :Cập nhật thông tin tài khoản người dùng;
+    if (Cập nhật thành công?) then (Có)
+      :Thông báo "Cập nhật thông tin tài khoản thành công";
+      :Chuyển hướng về danh sách\n(**SCR_User_List**);
+    else (Không)
+      :Thông báo "Cập nhật thông tin tài khoản thất bại";
+      :Ở lại màn hình cập nhật\n(**SCR_User_Update**);
+    endif
+  else (Không)
+    :Hiển thị thông báo lỗi dữ liệu;
+    :Ở lại màn hình cập nhật\n(**SCR_User_Update**);
+  endif
+else (Không)
+  :Hiển thị thông báo "Không tải được thông tin tài khoản, vui lòng thử lại";
+endif
+stop
+@enduml

@@ -1,0 +1,30 @@
+@startuml DM_TenGDCC_Update
+!pragma layout smetana
+title Activity Diagram: Chỉnh sửa danh mục Tên giao dịch công chứng
+start
+:Người dùng chọn chức năng **Chỉnh sửa danh mục tên giao dịch công chứng** từ menu\n(**DM_tenGDCC_Update**);
+:Hệ thống hiển thị form chỉnh sửa danh mục\n(**DM_tenGDCC_Update**);
+:Nhập thông tin chỉnh sửa danh mục (Mã danh mục **Disable**, Tên danh mục);
+:Người dùng bấm nút **Lưu thông tin**;
+:Hệ thống kiểm tra dữ liệu hợp lệ\n(mã danh mục không trùng lặp);
+if (Dữ liệu hợp lệ?) then (Có)
+  :Lưu dữ liệu danh mục;
+  :Hiển thị thông báo "Chỉnh sửa thông tin danh mục thành công";
+  :Quay về danh sách\n(**DM_tenGDCC_List**);
+else (Không)
+  if (Nhập thiếu thông tin bắt buộc?) then (Có)
+    :Hiển thị cảnh báo lỗi;
+    :Ở lại màn hình\n(**DM_tenGDCC_Update**);
+  else (Lỗi hệ thống)
+    :Hiển thị thông báo lỗi hệ thống;
+    :Ở lại màn hình\n(**DM_tenGDCC_Update**);
+  endif
+endif
+
+if (Người dùng chọn **Hủy**) then (Có)
+  :Form đóng, không lưu dữ liệu;
+  :Quay về danh sách\n(**DM_tenGDCC_List**);
+endif
+
+stop
+@enduml

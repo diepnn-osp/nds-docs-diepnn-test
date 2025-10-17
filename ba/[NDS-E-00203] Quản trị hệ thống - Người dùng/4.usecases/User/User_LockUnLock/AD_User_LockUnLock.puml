@@ -1,0 +1,36 @@
+@startuml AD_User_LockUnLock
+!pragma layout smetana
+title Activity Diagram: Khóa/Mở khóa tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng";
+if (Người dùng chọn một hoặc nhiều tài khoản?) then (Có)
+  :Người dùng chọn chức năng "Khóa/Mở khóa tài khoản";
+  :Hiển thị form xác nhận khóa/mở khóa tài khoản (**SCR_User_LockUnlock**);
+  :Người dùng chọn hành động (Khóa/Mở khóa);
+  :Người dùng nhập lý do khóa/mở khóa (nếu có);
+  :Người dùng xác nhận thực hiện;
+  if (Hành động là Khóa?) then (Có)
+    if (Tài khoản đang ở trạng thái Hoạt động?) then (Có)
+      :Cập nhật trạng thái tài khoản thành "Khóa";
+      :Ghi log lịch sử khóa tài khoản;
+      :Hiển thị thông báo "Khóa tài khoản thành công";
+    else (Không)
+      :Hiển thị thông báo "Tài khoản đã bị khóa trước đó";
+    endif
+  else (Không)
+    if (Hành động là Mở khóa?) then (Có)
+      if (Tài khoản đang ở trạng thái Khóa?) then (Có)
+        :Cập nhật trạng thái tài khoản thành "Hoạt động";
+        :Ghi log lịch sử mở khóa tài khoản;
+        :Hiển thị thông báo "Mở khóa tài khoản thành công";
+      else (Không)
+        :Hiển thị thông báo "Tài khoản đang ở trạng thái hoạt động";
+      endif
+    endif
+  endif
+  :Cập nhật lại danh sách người dùng;
+else (Không)
+  :Hiển thị thông báo "Vui lòng chọn ít nhất một tài khoản";
+endif
+stop
+@enduml

@@ -1,0 +1,85 @@
+@startuml
+!pragma layout smetana
+left to right direction
+
+'==================== Actors ====================
+actor "Chuyên viên STP" as CVSTP
+actor "Lãnh đạo Sở Tư pháp, Lãnh đạo Phòng HCBTTP tại Sở Tư pháp" as LeaderSTP
+actor "Lãnh đạo Bộ Tư pháp, Lãnh đạo Cục BTTP, Chuyên viên Cục BTTP" as LeaderBTP
+actor "Công chứng viên tại TCHNCC" as CCV
+actor "Nhân viên tại TCHNCC" as Staff
+
+'==================== Quản lý công chứng viên ====================
+package "Quản lý công chứng viên" as P_CCVMgmt {
+    usecase "Xem danh sách công chứng viên" as UC_CCV_List
+    usecase "Xem chi tiết công chứng viên" as UC_CCV_Detail
+    usecase "Thêm mới công chứng viên" as UC_CCV_Create
+    usecase "Chỉnh sửa công chứng viên" as UC_CCV_Update
+    usecase "Xóa công chứng viên" as UC_CCV_Delete
+    usecase "Tìm kiếm công chứng viên" as UC_CCV_Search
+    usecase "Xuất danh sách công chứng viên" as UC_CCV_Export
+    usecase "Xem lịch sử cập nhật công chứng viên" as UC_CCV_History
+}
+
+'==================== Quản lý chứng chỉ hành nghề ====================
+package "Quản lý chứng chỉ hành nghề" as P_CertMgmt {
+    usecase "Xem lịch sử cập nhật chứng chỉ hành nghề" as UC_ChungChi_History
+    usecase "Xem chi tiết chứng chỉ hành nghề" as UC_ChungChi_Detail
+}
+
+'==================== Tra cứu thông tin công chứng viên ====================
+package "Tra cứu thông tin công chứng viên" as P_Search {
+    usecase "Tra cứu công chứng viên toàn quốc" as UC_CCV_Lookup
+    usecase "Tra cứu chứng chỉ hành nghề toàn quốc" as UC_ChungChi_Lookup
+}
+
+'==================== Liên kết Actor → UC ====================
+' Chuyên viên STP
+CVSTP -- UC_CCV_List
+CVSTP -- UC_CCV_Detail
+CVSTP -- UC_CCV_Create
+CVSTP -- UC_CCV_Update
+CVSTP -- UC_CCV_Delete
+CVSTP -- UC_CCV_Search
+CVSTP -- UC_CCV_Export
+CVSTP -- UC_CCV_History
+
+CVSTP -- UC_ChungChi_History
+CVSTP -- UC_ChungChi_Detail
+
+CVSTP -- UC_CCV_Lookup
+CVSTP -- UC_ChungChi_Lookup
+
+' Lãnh đạo Sở Tư pháp / Phòng HCBTTP
+LeaderSTP -- UC_CCV_List
+LeaderSTP -- UC_CCV_Detail
+LeaderSTP -- UC_CCV_Search
+LeaderSTP -- UC_CCV_Export
+LeaderSTP -- UC_CCV_History
+
+LeaderSTP -- UC_ChungChi_History
+LeaderSTP -- UC_ChungChi_Detail
+
+LeaderSTP -- UC_CCV_Lookup
+LeaderSTP -- UC_ChungChi_Lookup
+
+' Lãnh đạo Bộ Tư pháp / Cục BTTP / Chuyên viên Cục BTTP
+UC_CCV_List -- LeaderBTP
+UC_CCV_Detail -- LeaderBTP
+UC_CCV_Search -- LeaderBTP
+UC_CCV_Export -- LeaderBTP
+UC_CCV_History -- LeaderBTP
+
+UC_ChungChi_History -- LeaderBTP
+UC_ChungChi_Detail -- LeaderBTP
+
+UC_CCV_Lookup -- LeaderBTP
+UC_ChungChi_Lookup -- LeaderBTP
+
+' Công chứng viên tại TCHNCC
+Staff <|-- CCV
+
+' Nhân viên tại TCHNCC
+UC_CCV_Lookup -- Staff
+UC_ChungChi_Lookup -- Staff
+@enduml

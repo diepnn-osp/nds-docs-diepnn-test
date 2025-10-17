@@ -1,0 +1,80 @@
+@startuml erd
+!pragma layout smetana
+left to right direction
+' Hồ sơ công chứng
+entity HoSoCongChung
+entity YeuCauMoHoSo
+entity YeuCauChuyenQuyenSoHuuHoSo
+entity YeuCauKhoiPhucDuLieu
+entity YeuCauTraCuuVanBanCongChung
+
+' Đối tượng, tài sản
+entity TaiSan
+entity CaNhan
+entity ToChuc
+
+' Thông tin ngăn chặn
+entity ThongTinNganChan
+entity ThongTinGiaiToa
+entity LichSuCapNhatThongTinNganChan
+entity TaiSanNCGT
+entity CaNhanNCGT
+entity ToChucNCGT
+
+' Công chứng viên
+entity CongChungVien
+entity ChungChiHanhNghe
+entity ChuKySo
+
+' Tổ chức hành nghề công chứng
+entity ToChucCongChung
+
+' Quản lý đơn vị
+entity DonVi
+
+' Quản lý người dùng và vai trò
+entity NguoiDung
+entity VaiTro
+entity QuyenChucNang
+
+' Quản lý thông báo
+entity ThongBao
+
+' Quản lý hướng dẫn sử dụng
+entity HuongDanSuDung
+
+'Quản lý câu hỏi thường gặp
+entity CauHoi
+
+'Quản lý file
+entity File
+
+HoSoCongChung }..{  TaiSan
+BenLienQuan }..{ CaNhan
+BenLienQuan }..{ ToChuc
+HoSoCongChung ||..{ YeuCauMoHoSo
+HoSoCongChung }..|| CongChungVien
+HoSoCongChung }..|| ToChucCongChung
+HoSoCongChung }..{ YeuCauChuyenQuyenSoHuuHoSo
+HoSoCongChung }..{ YeuCauKhoiPhucDuLieu
+HoSoCongChung ||..{ File
+
+ThongTinNganChan }..|| DonVi
+ThongTinNganChan }..{  TaiSan
+ThongTinNganChan }..{  CaNhan
+ThongTinNganChan }..{  ToChuc
+ThongTinGiaiToa }..|| DonVi
+ThongTinGiaiToa }..{  TaiSan
+ThongTinGiaiToa }..{  CaNhan
+ThongTinGiaiToa }..{  ToChuc
+
+CongChungVien ||..{ ChuKySoCongChungVien
+CongChungVien ||..|| ChungChiHanhNghe
+CongChungVien }..|| ToChucCongChung
+
+ToChucCongChung ||..{ ChuKySoTCHNCC
+
+NguoiDung }..{  VaiTro
+VaiTro }..{ QuyenChucNang
+
+@enduml

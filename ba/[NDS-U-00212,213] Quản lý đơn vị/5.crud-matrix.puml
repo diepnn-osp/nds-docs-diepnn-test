@@ -1,0 +1,7 @@
+@startuml CRUD_Matrix
+note as CRUD_Admin
+| Entity /Usecase       | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) |Download (R) |Import (C) |Export (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: | :---------: |:--------: |:--------: |
+| Donvi                 |    R     |     R      |     C      |     U      |     D      |     R      |   R         |     C     |     R     |
+end note
+@enduml

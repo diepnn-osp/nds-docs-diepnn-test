@@ -1,0 +1,13 @@
+@startuml CRUD_Matrix
+note as CRUD_Matrix
+| Entity                | List (R) | Detail (R) | Create (C) | Update (U) | Delete (D) | Search (R) |
+| :-------------------- | :------: | :--------: | :--------: | :--------: | :--------: | :--------: |
+| DM_LoaiGDCC           |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_TenGDCC            |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_LoaiTaiSan         |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_TTGiaodichCC       |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_Giayto             |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_BenLQ              |    R     |     R      |     C      |     U      |     D      |     R      |
+| DM_Chucvu             |    R     |     R      |     C      |     U      |     D      |     R      |
+end note
+@enduml

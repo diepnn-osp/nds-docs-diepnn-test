@@ -1,0 +1,24 @@
+@startuml AD_GDCC_Detail
+!pragma layout smetana
+title Activity Diagram: Xem chi tiết giao dịch công chứng
+
+start
+:Người dùng truy cập thành công màn hình danh sách giao dịch công chứng điện tử/giấy (**SCR_GDCC_List**);
+:Kiểm tra quyền truy cập;
+if (Có quyền?) then (Yes)
+    :Người dùng lựa chọn xem chi tiết 1 giao dịch công chứng;
+    :Truy vấn dữ liệu giao dịch công chứng \n(**ENT_HoSoCongChung**);
+        if (Có dữ liệu?) then (Yes)
+            :Kiểm tra cấu hình hiển thị chi tiết giao dịch công chứng;
+            :Hiển thị màn hình chi tiết giao dịch công chứng \n(**SCR_GDCC_Detail**);
+            :Hiển thị các trường thông tin chi tiết giao dịch công chứng theo cấu hình;
+            :Người dùng bấm nút quay lại hoặc "Đóng";
+            :Hệ thống quay lại màn hình danh sách giao dịch công chứng điện tử/giấy \n(**SCR_GDCC_List**);
+        else (No)
+            :Hiển thị thông báo lỗi "Không có dữ liệu giao dịch công chứng";  
+        endif
+else (No)
+  :Không hiển thị chức năng xem chi tiết giao dịch công chứng;
+endif
+stop
+@enduml

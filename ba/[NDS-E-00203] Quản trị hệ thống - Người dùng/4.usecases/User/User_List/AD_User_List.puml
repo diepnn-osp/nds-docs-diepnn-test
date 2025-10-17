@@ -1,0 +1,36 @@
+@startuml AD_User_List
+!pragma layout smetana
+title Activity Diagram: Xem danh sách tài khoản người dùng;
+start
+:Người dùng truy cập chức năng "Danh sách tài khoản người dùng";
+:Kiểm tra quyền truy cập theo vai trò (Admin, CVBTP, CVSTP, CCV);
+if (Người dùng có quyền?) then (Có)
+  :Tải danh sách tài khoản người dùng theo phạm vi quyền;
+  if (Tải dữ liệu thành công?) then (Có)
+    if (Danh sách có dữ liệu?) then (Có)
+      :Sắp xếp theo thời gian cập nhật (mới → cũ);
+      if (Số lượng bản ghi > 10?) then (Có)
+        :Thực hiện phân trang (10 bản ghi/trang);
+      else (Không)
+        :Hiển thị toàn bộ danh sách;
+      endif
+      :Hiển thị danh sách với các trường: STT, Tên tài khoản, Họ và tên, Email, Vai trò, Đơn vị, Trạng thái;
+      note right
+        Tùy theo phân quyền, người dùng có thể thực hiện các thao tác:
+        - Xem chi tiết
+        - Sửa (nếu có quyền)
+        - Xóa (nếu có quyền)
+        - Đổi mật khẩu (nếu có quyền)
+        - Gán/Xóa vai trò (nếu có quyền)
+      end note
+    else (Không)
+      :Hiển thị thông báo "Không có dữ liệu tài khoản người dùng";
+    endif
+  else (Không)
+    :Hiển thị thông báo "Không tải được danh sách, vui lòng thử lại";
+  endif
+else (Không)
+  :Ẩn menu "Quản lý tài khoản người dùng" khi người dùng đăng nhập;
+endif
+stop
+@enduml

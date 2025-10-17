@@ -1,0 +1,29 @@
+@startuml AD_DM_Donvi_Export
+!pragma layout smetana
+title Activity Diagram: Xuất danh sách danh mục đơn vị
+start
+:Người dùng truy cập chức năng "Danh sách danh mục đơn vị" (**SCR_DM_Donvi_List**);
+:Chọn những bản ghi danh mục cần xuất danh sách;
+:Chọn thao tác "Xuất danh sách";
+:Lấy dữ liệu danh sách danh mục đơn vị;
+if (Lấy dữ liệu thành công?) then (Có)
+  :Tạo file xuất danh sách (Excel/CSV);
+  if (Tạo file thành công?) then (Có)
+    :Tải về file xuất về thiết bị;
+    if (Tải về thành công?) then (Có)
+      :Thông báo "Xuất danh sách thành công";
+      :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+    else (Không)
+      :Thông báo "Tải về file thất bại";
+      :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+    endif
+  else (Không)
+    :Thông báo lỗi hệ thống\nkhông thể tạo file xuất;
+    :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+  endif
+else (Không)
+  :Thông báo "Không có dữ liệu để xuất";
+  :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+endif
+stop
+@enduml

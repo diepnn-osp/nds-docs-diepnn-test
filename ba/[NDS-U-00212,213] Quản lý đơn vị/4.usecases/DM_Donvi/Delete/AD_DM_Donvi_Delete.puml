@@ -1,0 +1,29 @@
+@startuml AD_DM_Donvi_Delete
+!pragma layout smetana
+title Activity Diagram: Xóa danh mục đơn vị
+start
+:Người dùng truy cập chức năng "Danh sách danh mục đơn vị" (**SCR_DM_Donvi_List**);
+:Chọn danh mục cần xóa từ danh sách;
+:Chọn thao tác xóa;
+:Kiểm tra điều kiện xóa?;
+if (Danh mục đã được sử dụng?) then (Có)
+  :Thông báo "Danh mục đã được sử dụng,\nkhông thể xóa";
+  :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+else (Không)
+  :Xác nhận xóa danh mục?;
+  if (Đồng ý?) then (Có)
+    :Xóa danh mục;
+    if (Xóa thành công?) then (Có)
+      :Thông báo "Xóa danh mục thành công";
+      :Chuyển hướng về danh sách\n(**SCR_DM_Donvi_List**);
+    else (Không)
+      :Thông báo lỗi hệ thống;
+      :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+    endif
+  else (Không)
+    :Hủy thao tác;
+    :Ở lại màn hình danh sách\n(**SCR_DM_Donvi_List**);
+  endif
+endif
+stop
+@enduml
